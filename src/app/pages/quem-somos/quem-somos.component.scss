@@ -1,0 +1,66 @@
+@import '../../app.component.scss';
+
+.font-roboto {
+    font-family: 'roboto';
+   
+}
+.azul-logo-mendes{
+    stop-color:$hover-color;stop-opacity:1;
+}
+.azul-medio{
+    stop-color:$azul-medio;stop-opacity:1;
+}/* Estilos para o componente de capa */
+
+.feature-card {
+    @apply bg-white p-6 rounded-lg shadow-lg;
+  }
+  
+/* Estilos para o quadrado com linha diagonal */
+.diagonal-square {
+    position: relative;
+    width: 100%;
+    height: 40vh; /* 40% da altura da tela */
+    background: linear-gradient(135deg, $hover-color 50%, transparent 50%), $azul-medio;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* Conteúdo central */
+  .hero-content {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+  }
+  
+  .diagonal-square h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  .diagonal-square button {
+    padding: 10px 20px;
+    background-color: #1E90FF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .diagonal-square button:hover {
+    background-color: #87CEFA;
+  }
+  
+  .hero-image {
+    position: absolute;
+    bottom: 0; 
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 70%;
+    max-height: 70%;
+  }

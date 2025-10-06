@@ -1,0 +1,311 @@
+<!-- cadastro-demanda-header.component.html -->
+<!-- cadastro-demanda-header.component.html -->
+
+<!-- aq -->
+  
+ <div class="mr-auto  place-self-center lg:col-span-7">
+  <div class="flex items-center justify-center pt-4">
+    <div>
+            
+            <a href="/demanda" class="inline-flex font-roboto  items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-black rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                Mostrar 
+                </a>
+            <button type="button" (click)="cadastrar()"  class="text-black font-roboto hover:text-white border border-gray-300 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-6 py-4 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                >Cadastrar 
+                <!--
+                <svg class="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                -->
+            </button>
+
+        </div>
+    </div>
+    </div>
+
+
+
+<div class="container mx-auto my-8 p-8 bg-gray-200 rounded-lg shadow-lg">
+    <section class="bg-gray-50 antialiased dark:bg-gray-900">
+      <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div class="p-5 mb-4 flex items-center justify-between gap-4 md:mb-8">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Ranking</h2>
+          <a href="#" title="" class="flex items-center text-base font-medium text-primary-700 hover:underline dark:text-primary-500">
+            Demandas
+            <svg class="ms-1 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
+            </svg>
+          </a>
+        </div>
+  
+        <div class="relative grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div *ngFor="let demanda of demandasPaginadas; let i = index" (click)="selecionarDemanda(demanda)" class="flex items-center cursor-pointer rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 animate-slide-in-right">
+            <span class="text-white bg-blue-500 px-2 py-1 rounded-l-lg">{{ (currentPage * itemsPerPage) + i + 1 }}º |</span>
+            <div class="flex-1 ml-4">
+              <span class="text-sm font-medium text-gray-900 dark:text-white">{{ demanda.nome }}</span>
+              <span class="text-sm text-gray-500 dark:text-gray-400">{{ demanda.descricao }}</span>
+              <span class="text-sm text-gray-700 dark:text-gray-300 ml-auto">{{ demanda.pontuacao }}</span>
+            </div>
+          </div>
+        </div>
+  
+        <div class="flex justify-between mt-4">
+          <div class="cursor-pointer">
+            <fa-icon [icon]="faArrowLeft" (click)="prevPage()" [class.disabled]="currentPage === 0" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"></fa-icon>
+          </div>
+          <div class="cursor-pointer">
+          <fa-icon [icon]="faArrowRight" (click)="nextPage()" [class.disabled]="(currentPage + 1) * itemsPerPage >= demandas.length" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white"></fa-icon>      
+            </div>
+        </div>
+        
+        <section>
+      
+            <div  *ngIf="estado === estadoAtual.ExibirDemanda">
+                <section class="bg-white dark:bg-gray-900">
+                    <div class="gap-8 items-centermax-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+                        <!--
+                        <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg" alt="dashboard image">
+                        -->
+                        <img class="w-3/4 h-2/3 dark:hidden" [src]="demandaSelecionada?.foto" alt="dashboard image">
+                        
+                       <!-- <img class="w-full hidden dark:block" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg" alt="dashboard image">
+                        --> 
+                       <div class="mt-4 md:mt-0">
+                            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ demandaSelecionada?.nome }}</h2>
+                            <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">{{ demandaSelecionada?.descricao }} </p>
+                            <a href="#" class="inline-flex items-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-primary-900">
+                                Get started
+                                <svg class="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+        <!--
+        <div *ngIf="estado === estadoAtual.ExibirDemanda" class="mt-4 p-4 bg-white rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ demandaSelecionada?.nome }}</h3>
+          <p class="text-gray-700 dark:text-gray-300">{{ demandaSelecionada?.descricao }}</p>
+          <p class="text-gray-900 dark:text-gray-100">Pontuação: {{ demandaSelecionada?.pontuacao }}</p>
+        </div>-->
+  
+        <div *ngIf="estado === estadoAtual.Cadastrar" class="mt-4 p-4 bg-white rounded-lg shadow-lg">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Cadastrar Demanda</h3>
+
+          
+            <form id="form" name="form" [formGroup]="form" (ngSubmit)="onSubmit()" class="pt-5">
+                <div class="grid gap-6 mb-6 md:grid-cols-2">
+                    <div>
+                        <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" formControlName="nome" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Digite seu nome" required />
+                    </div>
+                    <div>
+                        <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Endereço / Rua </label>
+                        <input type="text" id="local" name="local" formControlName="local" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Digite o local da demanda" required />
+                    </div>
+
+                    <div>
+                        <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          {{ tituloState === 'Titulo' ? 'Titulo' : 'Foto' }}
+                        </label>
+                        <div class="flex relative">
+                          <input
+                            type="text"
+                            id="titulo"
+                            name="titulo"
+                            [placeholder]="tituloState === 'Titulo' ? 'Digite o titulo' : 'Digite o link da sua foto'"
+                            [value]="tituloState === 'Titulo' ? tituloValue : fotoValue"
+                            (input)="onInputTituloChange($event)"
+                            class="rounded-s-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          />
+                          <span
+                            class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 cursor-pointer"
+                            (click)="toggleTituloInput()"
+                          >
+                            <fa-icon [icon]="faSyncAlt" class="text-black hover:text-blue-600  text-2xl w-5 h-9"></fa-icon>
+                          </span>
+                        </div>
+                      </div> 
+                    <div>
+                        <label for="website-admin" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          {{ currentState === 'Email' ? 'Email' : 'Telefone' }}
+                        </label>
+                        <div class="flex relative">
+                          <input
+                            type="text"
+                            id="email"
+                            name="email"
+                            [placeholder]="currentState === 'Email' ? 'Digite seu email' : 'Digite seu telefone'"
+                            [value]="currentState === 'Email' ? emailValue : phoneValue"
+                            (input)="onInputChange($event)"
+                            class="rounded-s-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          />
+                          <span
+                            class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600 cursor-pointer"
+                            (click)="toggleInput()"
+                          >
+                            <fa-icon [icon]="faSyncAlt" class="text-black hover:text-blue-600  text-2xl w-5 h-9"></fa-icon>
+                          </span>
+                        </div>
+                      </div>
+                      
+                    
+                    
+  
+
+                </div>
+
+                <div class="w-full mb-4 border border-gray-400 rounded-lg bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                    <div class="flex items-center justify-between px-3 py-2 border-b border-gray-200 dark:border-gray-600 border-gray-200">
+                        <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x sm:rtl:divide-x-reverse dark:divide-gray-600">
+                            <div class="flex items-center space-x-1 rtl:space-x-reverse sm:pe-4">
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 20">
+                                        <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6"/>
+                                    </svg>
+                                    <span class="sr-only">Attach file</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                        <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
+                                    </svg>
+                                    <span class="sr-only">Embed map</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                        <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"/>
+                                        <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"/>
+                                    </svg>
+                                    <span class="sr-only">Upload image</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+                                        <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
+                                        <path d="M14.067 0H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.933-2ZM6.709 13.809a1 1 0 1 1-1.418 1.409l-2-2.013a1 1 0 0 1 0-1.412l2-2a1 1 0 0 1 1.414 1.414L5.412 12.5l1.297 1.309Zm6-.6-2 2.013a1 1 0 1 1-1.418-1.409l1.3-1.307-1.295-1.295a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1-.001 1.408v.004Z"/>
+                                    </svg>
+                                    <span class="sr-only">Format code</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM13.5 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm3.5 9.5A5.5 5.5 0 0 1 4.6 11h10.81A5.5 5.5 0 0 1 10 15.5Z"/>
+                                    </svg>
+                                    <span class="sr-only">Add emoji</span>
+                                </button>
+                            </div>
+                            <div class="flex flex-wrap items-center space-x-1 rtl:space-x-reverse sm:ps-4">
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 21 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.5 3h9.563M9.5 9h9.563M9.5 15h9.563M1.5 13a2 2 0 1 1 3.321 1.5L1.5 17h5m-5-15 2-1v6m-2 0h4"/>
+                                    </svg>
+                                    <span class="sr-only">Add list</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M18 7.5h-.423l-.452-1.09.3-.3a1.5 1.5 0 0 0 0-2.121L16.01 2.575a1.5 1.5 0 0 0-2.121 0l-.3.3-1.089-.452V2A1.5 1.5 0 0 0 11 .5H9A1.5 1.5 0 0 0 7.5 2v.423l-1.09.452-.3-.3a1.5 1.5 0 0 0-2.121 0L2.576 3.99a1.5 1.5 0 0 0 0 2.121l.3.3L2.423 7.5H2A1.5 1.5 0 0 0 .5 9v2A1.5 1.5 0 0 0 2 12.5h.423l.452 1.09-.3.3a1.5 1.5 0 0 0 0 2.121l1.415 1.413a1.5 1.5 0 0 0 2.121 0l.3-.3 1.09.452V18A1.5 1.5 0 0 0 9 19.5h2a1.5 1.5 0 0 0 1.5-1.5v-.423l1.09-.452.3.3a1.5 1.5 0 0 0 2.121 0l1.415-1.414a1.5 1.5 0 0 0 0-2.121l-.3-.3.452-1.09H18a1.5 1.5 0 0 0 1.5-1.5V9A1.5 1.5 0 0 0 18 7.5Zm-8 6a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/>
+                                    </svg>
+                                    <span class="sr-only">Settings</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z"/>
+                                        <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z"/>
+                                    </svg>
+                                    <span class="sr-only">Timeline</span>
+                                </button>
+                                <button type="button" class="p-2 text-gray-500 rounded-sm cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                                    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
+                                        <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                    <span class="sr-only">Download</span>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" data-tooltip-target="tooltip-fullscreen" class="p-2 text-gray-500 rounded-sm cursor-pointer sm:ms-auto hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                            <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 19 19">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 1h5m0 0v5m0-5-5 5M1.979 6V1H7m0 16.042H1.979V12M18 12v5.042h-5M13 12l5 5M2 1l5 5m0 6-5 5"/>
+                            </svg>
+                            <span class="sr-only">Full screen</span>
+                        </button>
+                        <div id="tooltip-fullscreen" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700">
+                            Show full screen
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-2 bg-white rounded-b-lg dark:bg-gray-800">
+                        <label for="editor" class="sr-only">Publish post</label>
+                        <textarea id="descricao" name="descricao"  formControlName="descricao" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Digite a descrição de sua demanda" required ></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                    Cadastrar
+                </button>
+            </form>
+            
+               
+
+
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  
+      
+      
+<!--
+  <section class="bg-white dark:bg-gray-900">
+    <div class="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+       
+        <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
+            <img src="../../../assets/mao-fechada.png" alt="mockup">
+        </div>                
+    </div>
+</section>-->
+
+
+<!--
+<div class="w-full azul-logo-mendes flex flex-col items-center py-12 relative">
+    <h1 class="text-white text-3xl font-open font-bold"></h1>
+    <h1 class="max-w-2xl mb-4 text-4xl font-extrabold text-white tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white">
+        Demandas
+    </h1>
+  </div>
+  <div class="w-full flex flex-col items-center relative">
+    <div class="h-1 w-full bg-yellow-500"></div>
+    <div class="bg-yellow-500 rounded-full w-12 h-12 flex items-center justify-center -mt-6">
+      <fa-icon [icon]="faClipboardList" class="text-white text-2xl w-5 h-9"></fa-icon>
+    </div>
+  </div>
+  <div id="productCarousel" class="relative w-full overflow-hidden rounded-lg md:h-96">
+    <div *ngFor="let produto of produtos; let i = index" class="carousel-item" [class.active]="i === 0" data-carousel-item>
+      <div class="flex items-center p-8">
+        <img [src]="produto.foto" alt="{{ produto.nome }}" class="w-12 h-12 object-cover rounded-full">
+        <div class="ml-4">
+          <p class="text-lg font-semibold text-gray-800 dark:text-white">{{ produto.nome }}</p>
+          <p class="text-sm text-gray-500 dark:text-gray-400">{{ produto.descricao }}</p>
+          <p class="text-sm text-gray-800 dark:text-white">{{ produto.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+          <div class="flex items-center space-x-2">
+            <button (click)="atualizarQuantidade(produto.id, produto.quantidade - 1)" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+              </svg>
+            </button>
+            <span class="text-gray-800 dark:text-white">{{ produto.quantidade }}</span>
+            <button (click)="atualizarQuantidade(produto.id, produto.quantidade + 1)" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />
+              </svg>
+            </button>
+          </div>
+          <button (click)="removerDoCarrinho(produto.id)" class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1H4a1 1 0 100 2h1v9a2 2 0 002 2h6a2 2 0 002-2V6h1a1 1 0 100-2h-4V3a1 1 0 00-1-1H9zm0 3h2v1H9V5zm1 2a1 1 0 011 1v7a1 1 0 01-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-indicators absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+    <button *ngFor="let produto of produtos; let i = index" type="button" [class.active]="i === 0" (click)="setActiveSlide(i)"></button>
+  </div>
+  -->

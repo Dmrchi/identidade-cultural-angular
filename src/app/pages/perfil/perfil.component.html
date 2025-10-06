@@ -1,0 +1,369 @@
+<div class="bg-gray-100 min-h-screen">
+  <div class="container mx-auto">
+    <div class="p-4 md:p-8">
+      <div class="relative h-80 rounded-lg shadow-md">
+        <img src="../../../assets/publico.png" alt="Capa do perfil do usuário" loading="lazy" class="absolute inset-0 w-full h-full object-cover rounded-t-2xl">
+        <div class="absolute left-10 -bottom-28">
+          <div class="w-40 h-40 md:w-48 md:h-48 bg-red-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+            <img
+              class="rounded-full w-40 h-40 md:w-48 md:h-48 object-cover"
+              ngSrc="{{ usuarioLogado?.foto ?? 'https://www.llt.at/wp-content/uploads/2021/11/blank-profile-picture-g77b5d6651-1280-705x705.png' }}"
+              loading="lazy"
+              alt="Foto de Perfil do usuário"
+              width="705"
+              height="705"
+              loading="lazy"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-24 px-4">
+        <div class="flex items-center">
+          <div class="w-64 mr-4"></div>
+          <div class="flex-grow">
+            <div class="flex items-center flex-wrap">
+              <div class="flex items-center">
+                <h1 class="text-3xl font-bold text-gray-800 pt-4 md:p-1">{{ usuarioLogado?.nome }}</h1>
+                <h1 class="text-3xl font-bold text-gray-800 pl-2 pt-4 md:p-1">{{ usuarioLogado?.sobrenome }}</h1>
+              </div>
+              <div class="flex items-center space-x-2 mt-1">
+                <span *ngIf="usuarioLogado?.nome != ''" class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                  Usuario
+                </span>
+                <div class="flex items-center text-green-500 text-sm font-semibold">
+                  <span class="inline-block w-2 h-2 bg-green-500 rounded-full mr-1"></span>
+                  Ativo
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-auto">
+            <button class="text-gray-500 hover:text-gray-700">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405C18.21 14.542 18 13.593 18 12V9c0-3.313-2.687-6-6-6S6 5.687 6 9v3c0 .593-.21 1.542-.595 2.595L4 17h5m6 0v2a3 3 0 01-6 0v-2m6 0H9" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 border-b border-gray-200">
+        <nav class="-mb-px flex space-x-12 px-4" aria-label="Tabs">
+          <button
+            (click)="setActiveTab('perfil')"
+            [ngClass]="{
+              'border-blue-500 text-blue-600': activeTab === 'perfil',
+              'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'perfil'
+            }"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200"
+          >
+            Perfil
+          </button>
+          <button
+            (click)="setActiveTab('produtos')"
+            [ngClass]="{
+              'border-blue-500 text-blue-600': activeTab === 'produtos',
+              'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'produtos'
+            }"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200"
+          >
+            Produtos
+          </button>
+          <button
+            (click)="setActiveTab('vendas')"
+            [ngClass]="{
+              'border-blue-500 text-blue-600': activeTab === 'vendas',
+              'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300': activeTab !== 'vendas'
+            }"
+            class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors duration-200"
+          >
+            Vendas
+          </button>
+        </nav>
+      </div>
+
+      <div *ngIf="activeTab === 'perfil'" class="bg-white p-6 rounded-lg shadow-md">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl font-semibold text-gray-800">Detalhes</h2>
+          <button *ngIf="!editandoPerfil"
+                  (click)="habilitarEdicao()"
+                  class="text-blue-500 hover:text-blue-600 font-semibold">
+            Editar
+          </button>
+        </div>
+
+        <form *ngIf="editandoPerfil" [formGroup]="perfilForm" (ngSubmit)="salvarPerfil()">
+          <div class="flex flex-col md:flex-row md:space-x-4">
+            <!-- Lado Esquerdo -->
+            <div class="w-full md:w-1/2">
+              <div class="mb-4">
+                <label for="nome" class="block text-sm font-medium">Nome</label>
+                <input id="nome" formControlName="nome" type="text" placeholder="Nome"
+                  class="border p-2 w-full rounded-md" />
+              </div>
+              <div class="mb-4">
+                <label for="email" class="block text-sm font-medium">Email</label>
+                <input id="email" formControlName="email" type="text" placeholder="Email"
+                  class="border p-2 w-full rounded-md" readonly/>
+              </div>
+              <div class="mb-4">
+                <label for="foto" class="block text-sm font-medium">Foto</label>
+                <input id="foto" formControlName="foto" type="text" placeholder="URL da foto"
+                  class="border p-2 w-full rounded-md" />
+              </div>
+            </div>
+
+            <!-- Lado Direito -->
+            <div class="w-full md:w-1/2">
+              <div class="mb-4">
+                <label for="sobrenome" class="block text-sm font-medium">Sobrenome</label>
+                <input id="sobrenome" formControlName="sobrenome" type="text" placeholder="Sobrenome"
+                  class="border p-2 w-full rounded-md" />
+              </div>
+              <div class="mb-4">
+                <label for="telefone" class="block text-sm font-medium">Telefone</label>
+                <input id="telefone" formControlName="telefone" type="text" placeholder="Telefone"
+                  class="border p-2 w-full rounded-md" />
+              </div>
+              <div class="mb-4">
+                <label for="cpf" class="block text-sm font-medium">Cpf</label>
+                <input id="cpf" formControlName="cpf" type="text" placeholder="Cpf"
+                  class="border p-2 w-full rounded-md" />
+              </div>
+              
+            </div>
+
+            
+          </div>
+
+        <div class="mt-6 flex gap-2 justify-end">
+          <button type="button" (click)="cancelarEdicao()" class="bg-gray-300 px-4 py-2 rounded-md">Cancelar</button>
+          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Salvar</button>
+        </div>
+        </form>
+
+        <div *ngIf="!editandoPerfil" class="grid grid-cols-1 gap-y-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8">
+
+          <div class="flex flex-col pb-3">
+            <span class="text-sm font-medium text-gray-500">Nome</span>
+            <span class="mt-1 text-gray-800">{{ usuarioLogado?.nome }}</span>
+          </div>
+          <div class="flex flex-col pb-3">
+            <span class="text-sm font-medium text-gray-500">Sobrenome</span>
+            <span class="mt-1 text-gray-800">{{ usuarioLogado?.sobrenome }}</span>
+          </div>
+          <div class="flex flex-col pb-3">
+            <span class="text-sm font-medium text-gray-500"> Email </span>
+            <span class="mt-1 text-gray-800">{{ usuarioLogado?.email  }}...</span>
+          </div> 
+          <div class="flex flex-col pb-3">
+                <span class="text-sm font-medium text-gray-500">Telefone</span>
+                <span class="mt-1 text-gray-800">{{ usuarioLogado?.telefone }}</span>
+           </div> 
+            
+          <div class="flex flex-col pb-3">
+            <span class="text-sm font-medium text-gray-500">Foto</span>
+            <span class="mt-1 text-gray-800">{{ usuarioLogado?.foto | slice:0:20 }}...</span>
+          </div>
+          <div class="flex flex-col pb-3">
+                <span class="text-sm font-medium text-gray-500">CPF</span>
+                <span class="mt-1 text-gray-800">{{ usuarioLogado?.cpf }}</span>
+          </div>
+
+          <div class="flex flex-col pb-3">
+                <span class="text-sm font-medium text-gray-500"> Pontos</span>
+                <span class="mt-1 text-gray-800">{{ usuarioLogado?.pontos }}</span>
+          </div>
+      <div class="flex flex-col pb-3">
+        <span class="text-sm font-medium text-gray-500 pb-4">Loja</span>
+        <button
+          (click)="onToggleLojaStatus()"
+          class="relative flex items-center h-8 w-16 rounded-full transition-colors duration-300 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          [ngClass]="{ 'bg-green-500': statusLoja(), 'bg-red-500': !statusLoja() }"
+        >
+          <span
+            class="transform transition-transform duration-300 ease-in-out w-6 h-6 bg-white rounded-full shadow-md"
+            [ngClass]="{ 'translate-x-9': statusLoja(), 'translate-x-1': !statusLoja() }"
+          ></span>
+        </button>
+      </div>
+        </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'produtos'" class="bg-white p-6 rounded-lg shadow-md">
+        <div id="produtos" class="produtos flex flex-col">
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-semibold text-gray-800">Produtos</h2>
+              <button class="text-blue-500 hover:text-blue-600 font-semibold">Editar</button>
+            </div>
+
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold text-gray-700">{{ produtos.length }} Produtos</h3>
+              <button class="px-2 py-1 bg-gray-200 text-gray-600 rounded">⋮</button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a *ngFor="let produto of produtos" [routerLink]="['/detalhes-produto', produto.id]" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                <img [src]="produto.imagem" [alt]="'Imagem do produto ' + produto.nome" class="w-full h-32 object-cover rounded mb-4">
+                <h3 class="text-md font-medium text-gray-800">{{ produto.nome }}</h3>
+                <p class="text-sm text-gray-500">{{ produto.steps }} Etapas</p>
+                <div class="mt-2">
+                  <span
+                    [ngClass]="{
+                      'bg-green-100 text-green-800': produto.status === 'Concluído',
+                      'bg-yellow-100 text-yellow-800': produto.status === 'Em Andamento',
+                      'bg-blue-100 text-blue-800': produto.status === 'Iniciar Trilha'
+                    }"
+                    class="px-2 py-1 text-xs font-semibold rounded-full"
+                  >
+                    {{ produto.status }}
+                  </span>
+                </div>
+                <p class="text-sm text-gray-600 mt-1">{{ produto.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="activeTab === 'vendas'" class="bg-white p-6 rounded-lg shadow-md">
+        <h2>Vendas</h2>
+        <p>Conteúdo de vendas aqui.</p>
+      </div>
+        
+<div *ngIf="activeTab === 'perfil'" class="mt-6 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold text-gray-800 mb-4">Endereço</h2>
+  <form [formGroup]="enderecoForm" (ngSubmit)="salvarEndereco()">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+      <div>
+        <label for="cep" class="block text-sm font-medium text-gray-700">CEP</label>
+        <div class="flex space-x-2 mt-1">
+
+ <input
+              type="text"
+              id="cep"
+              formControlName="cep"
+              class="border p-2 flex-1 rounded-md focus:border-blue-500 focus:ring-blue-500 focus:ring-opacity-50"
+              placeholder="26700-000"
+              (input)="onCepChange()"
+              [ngClass]="{'border-red-500': enderecoForm.get('cep')?.invalid && enderecoForm.get('cep')?.touched}"
+            />
+<div *ngIf="loadingCep()" class="absolute right-2 top-2">
+              <svg class="animate-spin h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8h8a8 8 0 01-16 0z"></path>
+              </svg>
+            </div>
+    <button type="button" (click)="onCepHelp()" class="px-4 py-2 bg-blue-500 text-white rounded-md whitespace-nowrap hover:bg-blue-600 transition-colors duration-200">Não sei CEP</button>
+        </div>
+        <div *ngIf="enderecoForm.get('cep')?.invalid && enderecoForm.get('cep')?.touched" class="text-red-500 text-sm">
+          CEP é obrigatório.
+        </div>
+      </div>
+
+      <!-- Estado -->
+      <div>
+        <label for="estado" class="block text-sm font-medium text-gray-700">Estado</label>
+        <input type="text" id="estado" formControlName="estado" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex: RJ" />
+        <div *ngIf="enderecoForm.get('estado')?.invalid && enderecoForm.get('estado')?.touched" class="text-red-500 text-sm">
+          Estado é obrigatório.
+        </div>
+      </div>
+
+      <!-- Cidade -->
+      <div>
+        <label for="cidade" class="block text-sm font-medium text-gray-700">Cidade</label>
+        <input type="text" id="cidade" formControlName="cidade" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex: Mendes" />
+        <div *ngIf="enderecoForm.get('cidade')?.invalid && enderecoForm.get('cidade')?.touched" class="text-red-500 text-sm">
+          Cidade é obrigatória.
+        </div>
+      </div>
+
+      <!-- Bairro -->
+      <div>
+        <label for="bairro" class="block text-sm font-medium text-gray-700">Bairro</label>
+        <!-- <select id="bairro" formControlName="bairro" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50">
+          <option value="">Selecione um bairro</option>
+          <option value="test">Selecione um bairro</option>
+           Adicione opções dinâmicas aqui, se necessário 
+        </select>-->
+        <input type="text" id="bairro" formControlName="bairro" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex.: Ventania" />
+
+        <div *ngIf="enderecoForm.get('bairro')?.invalid && enderecoForm.get('bairro')?.touched" class="text-red-500 text-sm">
+          Bairro é obrigatório.
+        </div>
+      </div>
+
+      <!-- Rua -->
+      <div>
+        <label for="rua" class="block text-sm font-medium text-gray-700">Rua / Avenida</label>
+        <input type="text" id="rua" formControlName="rua" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex.: Avenida los Leones, 4565" />
+        <div *ngIf="enderecoForm.get('rua')?.invalid && enderecoForm.get('rua')?.touched" class="text-red-500 text-sm">
+          Rua é obrigatória.
+        </div>
+      </div>
+
+      <!-- Complemento -->
+      <div>
+        <label for="complemento" class="block text-sm font-medium text-gray-700">Complemento (opcional)</label>
+        <input type="text" id="complemento" formControlName="complemento" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex: 201" />
+      </div>
+
+      <!-- Número -->
+      <div>
+        <label for="numero" class="block text-sm font-medium text-gray-700">Número</label>
+        <div class="flex items-center space-x-2 mt-1">
+          <input type="text" id="numero" formControlName="numero" class="border p-2 flex-1 rounded-md focus:border-blue-500 focus:ring-blue-500 focus:ring-opacity-50" placeholder="Ex: 45607052"/>
+          <label for="semNumero" class="flex items-center text-sm text-gray-700 whitespace-nowrap">
+            <input type="checkbox" id="semNumero" formControlName="isSemNumero" class="mr-2" />
+            Sem número
+          </label>
+        </div>
+        <div *ngIf="enderecoForm.get('numero')?.invalid && enderecoForm.get('numero')?.touched && !enderecoForm.get('isSemNumero')?.value" class="text-red-500 text-sm">
+          Número é obrigatório.
+        </div>
+      </div>
+
+      <!-- Localidade (mantida como readonly, sem formControlName) -->
+      <div>
+        <p class="text-sm text-gray-700 font-medium">Localidade</p>
+        <p class="text-gray-900 mt-1">{{ enderecoForm.get('cidade')?.value || 'Rio de Janeiro' }}, {{ enderecoForm.get('estado')?.value || 'RJ' }}</p>
+      </div>
+
+      <!-- Informações Adicionais -->
+      <div class="md:col-span-2">
+        <label for="infoAdicionais" class="block text-sm font-medium text-gray-700">Informações adicionais deste endereço (opcional)</label>
+        <textarea id="infoAdicionais" formControlName="adicional" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Rua Alto da Boa Vista, 133&#10;Subida Xavier"></textarea>
+      </div>
+    </div>
+
+    <div class="mt-4 flex flex-wrap justify-between items-center">
+<p class="text-sm text-gray-700">{{ contagemCaracteres }} / 255</p>
+      <div class="mt-2 md:mt-0">
+        <p class="text-sm text-gray-700">Este é o seu trabalho ou sua casa?</p>
+        <div class="flex space-x-4 mt-2 pb-4">
+          <label class="flex items-center">
+            <input type="radio" name="location" value="casa" class="mr-2" />
+            Casa
+          </label>
+          <label class="flex items-center">
+            <input type="radio" name="location" value="trabalho" class="mr-2" />
+            Trabalho
+          </label>
+        </div>
+        <button type="submit" class="p-4 pr-10 pl-10 bg-blue-500 text-white rounded-md whitespace-nowrap hover:bg-blue-600 transition-colors duration-200" [disabled]="!enderecoForm.valid">
+          Salvar Endereço
+        </button>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="message" [ngClass]="{'text-red-500': isError, 'text-green-500': !isError}" class="mt-4">
+    {{ message }}
+  </div>
+</div>
+
+    </div>
+</div>

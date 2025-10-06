@@ -1,0 +1,91 @@
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+   
+    <!-- Formulário de Produto -->
+    <div class="form-container">
+        <div class="p-5">
+            <h2 class="text-2xl font-bold">Cadastrar Produto</h2>
+        </div>
+        <form [formGroup]="produtoForm" (ngSubmit)="onSubmitProduto()">
+            <div class="form-group">
+                <label for="produtoNome">Nome</label>
+                <input id="produtoNome" type="text" formControlName="nome" placeholder="Nome" class="input-grosso" />
+                <div *ngIf="produtoNomeControl?.invalid && (produtoNomeControl?.dirty || produtoNomeControl?.touched)" class="error-message">
+                    <div *ngIf="produtoNomeControl?.errors?.['required']">Nome do produto é obrigatório.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="produtoCategoria">Categoria</label>
+                <div class="flex flex-wrap md:flex-nowrap gap-4 items-center">
+                    <select id="produtoCategoria" formControlName="categoria" class="input-grosso flex-grow w-full md:w-auto">
+                        <option value="" disabled>Selecione uma categoria</option>
+                        <option *ngFor="let cat of listaDeCategorias" [ngValue]="cat">{{ cat.nome }}</option>
+                    </select>              
+                  <input id="quantidade" readonly  type="text" formControlName="quantidade" class="input-grosso" />
+
+                    <div class="w-68 hidden">
+                        <input id="produtoImagem" type="text" formControlName="imagem" value="1" class="input-grosso"/>
+                    </div>
+                    <button (click)="aumentarQuantidade()"  data-modal-target="default-modal" data-modal-toggle="default-modal" class="btn-icon" type="button">
+                        <fa-icon size="2x" [icon]="faCirclePlus"></fa-icon>
+                    </button>
+                    <button (click)="diminuirQuantidade()" data-modal-target="default-modal" data-modal-toggle="default-modal" class="btn-icon" type="button">
+                        <fa-icon size="2x" [icon]="faCircleMinus"></fa-icon>
+                    </button>
+                </div>
+                <div *ngIf="produtoCategoriaControl?.invalid && (produtoCategoriaControl?.dirty || produtoCategoriaControl?.touched)" class="error-message">
+                    <div *ngIf="produtoCategoriaControl?.errors?.['required']">Categoria é obrigatória.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="produtoPreco">Preço</label>
+                <input id="produtoPreco" type="number" formControlName="preco" placeholder="Preço" class="input-grosso" />
+                <div *ngIf="produtoPrecoControl?.invalid && (produtoPrecoControl?.dirty || produtoPrecoControl?.touched)" class="error-message">
+                    <div *ngIf="produtoPrecoControl?.errors?.['required']">Preço é obrigatório.</div>
+                    <div *ngIf="produtoPrecoControl?.errors?.['min']">Preço deve ser maior que zero.</div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="produtoImagemUrl">URL da Imagem</label>
+                <input id="produtoImagemUrl" type="text" formControlName="imagem" placeholder="https://exemplo.com/imagem.jpg" class="input-grosso" />
+                <div *ngIf="produtoImagemControl?.invalid && (produtoImagemControl?.dirty || produtoImagemControl?.touched)" class="error-message">
+                    <div *ngIf="produtoImagemControl?.errors?.['required']">A URL da imagem é obrigatória.</div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" [disabled]="!produtoForm.valid" class="w-full input-grosso">Salvar Modificações do Produto</button>
+            </div>
+        </form>
+    </div>
+
+    <hr class="my-8">
+
+    <!-- Formulário de Categoria -->
+    <div class="form-container">
+        <div class="p-5">
+            <h2 class="text-2xl font-bold">Editar informações de Categoria</h2>
+        </div>
+        <form [formGroup]="categoriaForm" (ngSubmit)="onSubmitCategoria()">
+            <div class="form-group">
+                <label for="categoriaNome">Nome</label>
+                <input id="categoriaNome" type="text" formControlName="nome" placeholder="Nome" class="input-grosso" />
+                <div *ngIf="categoriaNomeControl?.invalid && (categoriaNomeControl?.dirty || categoriaNomeControl?.touched)" class="error-message">
+                    <div *ngIf="categoriaNomeControl?.errors?.['required']">Nome da categoria é obrigatório.</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="categoriaFoto">URL da Foto</label>
+                <input id="categoriaFoto" type="text" formControlName="icone" placeholder="URL da Foto" class="input-grosso" />
+                <div *ngIf="categoriaIconeControl?.invalid && (categoriaIconeControl?.dirty || categoriaIconeControl?.touched)" class="error-message">
+                    <div *ngIf="categoriaIconeControl?.errors?.['required']">URL da foto é obrigatória.</div>
+                </div>
+            </div>
+            <div>
+                <button type="submit" [disabled]="!categoriaForm.valid" class="w-full input-grosso">Salvar Modificações da Categoria</button>
+            </div>
+        </form>
+    </div>
+</div>

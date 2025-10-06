@@ -1,0 +1,6 @@
+<div class="relative w-full overflow-hidden rounded-lg md:h-96">
+    <div *ngFor="let slide of slides; let i = index" class="carousel-item" [class.active]="i === activeIndex">
+      <img [src]="slide" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" [alt]="'Slide ' + (i + 1)">
+    </div>
+  </div>
+  

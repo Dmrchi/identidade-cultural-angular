@@ -1,0 +1,217 @@
+<div class="bg-gray-100 font-sans antialiased flex flex-col items-center justify-center">
+  <div class="p-2"></div>
+    <div class="w-full max-w-7xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+      <div class="p-6">
+        
+        <div class="flex items-center justify-between mb-4">
+          
+          <h2 class="text-2xl font-bold text-gray-800">Loja d' {{usuario?.nome}}</h2>
+          <div class="flex space-x-2">
+            <span class="block w-2 h-2 rounded-full bg-blue-500"></span>
+            <span class="block w-2 h-2 rounded-full bg-gray-300"></span>
+            <span class="block w-2 h-2 rounded-full bg-gray-300"></span>
+          </div>
+        </div>
+
+        <div class="relative">
+          <!-- Renderiza em uma única linha se a quantidade de produtos for menor ou igual a 8 -->
+          @if (produtos().length <= 8) {
+            <div
+              #carouselContainer
+              class="flex overflow-hidden space-x-4 scroll-smooth"
+              [style.scroll-snap-type]="'x mandatory'"
+              (scroll)="onScroll($event, 0)"
+            >
+              @for (produto of produtos(); track $index) {
+                <div class="flex-none w-64 p-4 rounded-lg bg-white transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadow-md"
+                     [style.scroll-snap-align]="'start'">
+                    <a [routerLink]="['/detalhes-produto', produto.id]" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      
+                        <div class="relative h-48 mb-4 overflow-hidden rounded-md">
+                        <!-- <a href="detalhes-produto/{{produto.id}}" class="flex h-full items-center justify-center">-->
+                          <img [src]="produto.imagem" [width]="192" [height]="192" [alt]="produto.nome" class="w-full h-full object-contain">
+                        </div>
+                      </a>
+
+                  <div class="flex flex-col">
+                    <h3 class="text-base text-gray-700 h-10 overflow-hidden">{{ produto.nome }}</h3>
+                    <p class="text-xl font-semibold mt-2">R${{ produto.preco }}</p>
+                    <p class="text-sm font-semibold text-green-600 mt-2">Produto</p>
+                  </div>
+                </div>
+              }
+            </div>
+            <!-- Botões para o carrossel de uma linha -->
+            <button
+              [disabled]="showPrevButtonTop() === false"
+              (click)="scroll('left', 0)"
+              class="absolute top-1/2 -translate-y-1/2 left-2 p-3 bg-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              [disabled]="showNextButtonTop() === false"
+              (click)="scroll('right', 0)"
+              class="absolute top-1/2 -translate-y-1/2 right-2 p-3 bg-white rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          } @else {
+            <!-- Renderiza em duas linhas se a quantidade for maior que 8 -->
+            <div class="flex flex-col gap-4">
+              <!-- Primeira linha (metade 1) -->
+              <div
+                #carouselContainer
+                class="flex overflow-hidden space-x-4 scroll-smooth"
+                [style.scroll-snap-type]="'x mandatory'"
+                (scroll)="onScroll($event, 0)"
+              >
+                @for (produto of metade1(); track $index) {
+                  <div class="flex-none w-64 p-4 rounded-lg bg-white transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadow-md"
+                       [style.scroll-snap-align]="'start'">
+                        <a [routerLink]="['/detalhes-produto', produto.id]" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                          <div class="relative h-48 mb-4 overflow-hidden rounded-md">
+                            <img [src]="produto.imagem" [width]="192" [height]="192" [alt]="produto.nome" class="w-full h-full object-contain">
+                          </div>
+                        </a>
+                    <div class="flex flex-col">
+                      <h3 class="text-base text-gray-700 h-10 overflow-hidden">{{ produto.nome }}</h3>
+                      <p class="text-xl font-semibold mt-2">R${{ produto.preco }}</p>
+                      <p class="text-sm font-semibold text-green-600 mt-2">Produto</p>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <!-- Segunda linha (metade 2) -->
+              <div
+                #carouselContainer
+                class="flex overflow-hidden space-x-4 scroll-smooth"
+                [style.scroll-snap-type]="'x mandatory'"
+                (scroll)="onScroll($event, 1)"
+              >
+                @for (produto of metade2(); track $index) {
+                  <div class="flex-none w-64 p-4 rounded-lg bg-white transform hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer shadow-md"
+                       [style.scroll-snap-align]="'start'">
+                    <a [routerLink]="['/detalhes-produto', produto.id]" class="block bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                      <div class="relative h-48 mb-4 overflow-hidden rounded-md">
+                        <img [src]="produto.imagem" [width]="192" [height]="192" [alt]="produto.nome" class="w-full h-full object-contain">
+                      </div>
+                    </a>
+                    <div class="flex flex-col">
+                      <h3 class="text-base text-gray-700 h-10 overflow-hidden">{{ produto.nome }}</h3>
+                      <p class="text-xl font-semibold mt-2">R${{ produto.preco }}</p>
+                      <p class="text-sm font-semibold text-green-600 mt-2">Produto</p>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <!-- Botões de navegação para a primeira linha (carrossel 0) -->
+            <button
+              [disabled]="showPrevButtonTop() === false"
+              (click)="scroll('left', 0)"
+              class="absolute top-1/4 -translate-y-1/2 left-2 p-3 bg-blue-800 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              [disabled]="showNextButtonTop() === false"
+              (click)="scroll('right', 0)"
+              class="absolute top-1/4 -translate-y-1/2 right-2 p-3 bg-blue-800 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <!-- Botões de navegação para a segunda linha (carrossel 1) -->
+            <button
+              [disabled]="showPrevButtonBottom() === false"
+              (click)="scroll('left', 1)"
+              class="absolute bottom-1/4 -translate-y-1/2 left-2 p-3 bg-blue-800 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              [disabled]="showNextButtonBottom() === false"
+              (click)="scroll('right', 1)"
+              class="absolute bottom-1/4 -translate-y-1/2 right-2 p-3 bg-blue-800 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+  <div class="w-full p-6 bg-blue-800 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+
+        <!-- Este contêiner principal gerencia o layout horizontal e vertical -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+
+            <!-- Contêiner do texto e do botão -->
+            <div class="flex-1">
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white dark:text-white">
+                        Seja Bem Vindo a minha Loja.
+                    </h5>
+                </a>
+                <p class="mb-3 font-normal text-white dark:text-gray-400">
+                    Fique a vontade para escolher os produtos.
+                </p>
+                <a href="#" class="inline-flex items-center px-3 py-2 font-bold text-sm font-medium text-center text-blue-700 bg-gray-100 rounded-lg hover:bg-blue-300 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Perfil
+                    <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Contêiner da imagem do perfil com layout responsivo -->
+            <div class="mt-4 md:mt-0 md:ml-6">
+                      
+                <img  [src]="usuario?.foto" id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" class="w-28 h-28 rounded-full cursor-pointer  border-4 border-white"  alt="User dropdown">
+
+                <!-- Dropdown menu -->
+                <div id="userDropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">
+                    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+                      <div>{{usuario?.nome}}</div>
+                      <div class="font-medium truncate">{{usuario?.email}}</div>
+                      <div class="font-medium truncate">{{usuario?.telefone}}</div>
+                    </div>
+                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="avatarButton">
+                    <li>
+                      <a [href]="'mailto:' + usuario?.email" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                          Enviar E-mail
+                        </a>
+                    </li>
+                    <li *ngIf="usuario?.telefone">
+                      <a [href]="'https://wa.me/' + usuario?.telefone" target="_blank" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                        Enviar Mensagem
+                      </a>
+                    </li>
+                     
+                    </ul>
+                    <div class="py-1">
+                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    </div>
+                </div>
+
+            
+              </div>
+            
+        </div>
+
+    </div>
+    
+</div>

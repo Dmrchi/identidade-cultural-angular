@@ -1,0 +1,75 @@
+<div class="flex items-start justify-center bg-white h-screen">
+  <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg border border-gray-200 mt-4">
+    <div class="flex justify-center mb-6">
+      <img src="../../../assets/Independencia.png" style="width: 35%; height: 35%;" alt="Instituto Infonet Logo" class="h-16">
+    </div>
+    <h1 class="text-center text-blue-600 mb-2 text-2xl font-bold">Registrar Conta</h1>
+    <p class="text-center text-gray-500 mb-2">Transforme a sua paixão em arte com nossa vitrine.</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="registrar()">
+
+      <div *ngIf="errorMessage" class="mb-4 p-3 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <div class="mb-4">
+        <input type="text" placeholder="Nome" formControlName="nome"
+               class="w-full p-2 border rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="loginForm.get('nome')?.invalid && loginForm.get('nome')?.touched" class="text-red-500 text-xs mt-1">
+          <p *ngIf="loginForm.get('nome')?.errors?.['required']">Nome é obrigatório.</p>
+          <p *ngIf="loginForm.get('nome')?.errors?.['minlength']">O nome deve ter no mínimo 2 caracteres.</p>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <input type="email" placeholder="Email" formControlName="email"
+               class="w-full p-2 border rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-red-500 text-xs mt-1">
+          <p *ngIf="loginForm.get('email')?.errors?.['required']">Email é obrigatório.</p>
+          <p *ngIf="loginForm.get('email')?.errors?.['email']">Email inválido.</p>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <input type="tel" placeholder="Telefone" formControlName="telefone"
+               class="w-full p-2 border rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="loginForm.get('telefone')?.invalid && loginForm.get('telefone')?.touched" class="text-red-500 text-xs mt-1">
+          <p *ngIf="loginForm.get('telefone')?.errors?.['required']">Telefone é obrigatório.</p>
+          <p *ngIf="loginForm.get('telefone')?.errors?.['pattern']">Telefone inválido. Use o formato (XX) XXXX-XXXX ou (XX) 9XXXX-XXXX.</p>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <input type="password" placeholder="Senha" formControlName="senha"
+               class="w-full p-2 border rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" class="text-red-500 text-xs mt-1">
+          <p *ngIf="loginForm.get('senha')?.errors?.['required']">Senha é obrigatória.</p>
+          <p *ngIf="loginForm.get('senha')?.errors?.['minlength']">A senha deve ter no mínimo 6 caracteres.</p>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <input type="password" placeholder="Repetir Senha" formControlName="repetirSenha"
+               class="w-full p-2 border rounded-lg bg-gray-100 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="loginForm.get('repetirSenha')?.invalid && loginForm.get('repetirSenha')?.touched" class="text-red-500 text-xs mt-1">
+          <p *ngIf="loginForm.get('repetirSenha')?.errors?.['required']">Repetir senha é obrigatório.</p>
+          <p *ngIf="loginForm.get('repetirSenha')?.errors?.['minlength']">A senha deve ter no mínimo 6 caracteres.</p>
+        </div>
+        <div *ngIf="loginForm.errors?.['mismatch'] && loginForm.get('repetirSenha')?.touched" class="text-red-500 text-xs mt-1">
+          <p>As senhas não coincidem.</p>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="loginForm.invalid"
+              class="w-full bg-blue-900 text-white p-2 rounded-lg mb-4 hover:bg-blue-800 disabled:opacity-50">Registrar</button>
+
+      <div class="text-center text-gray-500 mb-2">ou</div>
+    <a href="/entrar">
+        <button type="button" class="w-full bg-gray-100 text-gray-700 p-2 rounded-lg border border-gray-300 flex items-center justify-center hover:bg-gray-200">
+        Fazer Login
+        </button>
+    </a>
+      <p class="text-center text-gray-500 mt-4 text-sm">Termos e Condições e Política de Privacidade</p>
+    </form>
+  </div>
+</div>

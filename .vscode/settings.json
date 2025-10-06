@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/df85149e-ae2b-4c7b-86a8-b58108736767/resourceGroups/identcult/providers/Microsoft.Web/sites/identcultural",
+    "appService.deploySubpath": "dist\\culturadigital\\browser"
+}

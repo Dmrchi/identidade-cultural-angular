@@ -1,0 +1,114 @@
+@import '../../app.component.scss';
+
+.font-open {
+    font-family: 'open-sans';
+}
+.font-roboto {
+    font-family: 'roboto';
+   
+}
+
+.azul-logo-mendes {
+    background-color:  $hover-color;
+}
+.card {
+    transition: all 0.3s ease-in-out;
+  }
+  
+.carousel-item img {
+    @apply transition-transform duration-1000; /* Adicione esta linha */
+  }
+  
+  .carousel-item.active img {
+    @apply transform scale-110; /* Adicione esta linha para o efeito de zoom */
+  }
+  .carousel-item::before {
+    @apply absolute inset-0 bg-black opacity-70 z-10; /* Adicione esta linha */
+    content: '';
+  }
+  
+  .carousel-content {
+    @apply relative z-20; /* Certifique-se de que o conteúdo esteja acima da sobreposição */
+  }
+  
+.carousel-container {
+    @apply relative w-full h-96 overflow-hidden;
+  }
+  
+  .carousel {
+    @apply flex;
+  }
+  
+  .carousel-item {
+    @apply relative w-full h-96 flex-shrink-0 transition-all duration-700 transform;
+  }
+  
+  .carousel-content {
+    @apply absolute inset-0 flex flex-col justify-center items-center text-center;
+  }
+  
+  .carousel-content h2,
+  .carousel-content h3,
+  .carousel-content p,
+  .carousel-content button {
+    @apply opacity-0;
+    animation-fill-mode: forwards;
+  }
+  
+  .carousel-content .animate-fadeIn.delay-1 {
+    animation: fadeInText 1s ease-in-out 0s;
+    animation-fill-mode: forwards; /* Manter visibilidade */
+  }
+  
+  .carousel-content .animate-fadeIn.delay-2 {
+    animation: fadeInText 1s ease-in-out 1s;
+    animation-fill-mode: forwards; /* Manter visibilidade */
+  }
+  
+  .carousel-content .animate-fadeIn.delay-3 {
+    animation: fadeInText 1s ease-in-out 2s;
+    animation-fill-mode: forwards; /* Manter visibilidade */
+  }
+  
+  .carousel-content .animate-fadeIn.delay-4 {
+    animation: fadeInText 1s ease-in-out 3s;
+    animation-fill-mode: forwards; /* Manter visibilidade */
+  }
+  
+  .prev, .next {
+    @apply absolute top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg;
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: fadeInIcon 0.5s ease-in-out forwards;
+  }
+  
+  .prev {
+    @apply left-2;
+  }
+  
+  .next {
+    @apply right-2;
+  }
+  
+  @keyframes fadeInText {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInIcon {
+    0% {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  

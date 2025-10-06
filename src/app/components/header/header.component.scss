@@ -1,0 +1,22 @@
+@import '../../app.component.scss';
+
+.font-open {
+    font-family: 'open-sans';
+}
+.font-roboto {
+    font-family: 'roboto';
+   
+}
+.pairar {
+    &:hover {
+        color:  $hover-color;
+    }
+
+    &.active {
+        color: $hover-color;
+    }
+
+}
+.azul-logo-mendes {
+    background-color:  $hover-color;
+}

@@ -1,0 +1,326 @@
+<nav class="bg-white dark:bg-gray-800 antialiased">
+    <div class="w-full h-6 azul-logo-mendes">
+
+    </div>
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0 py-4">
+      <div class="flex items-center justify-between">
+  
+        <div class="flex items-center space-x-8">
+          <div class="shrink-0">
+            <a href="#" title="" class="">
+              <img class="block w-auto h-20 dark:hidden" src="../../../assets/logoIndependencia.png" alt="">
+              <img class="hidden w-auto h-8 dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/logo-full-dark.svg" alt="">
+            </a>
+          </div>
+          
+          <ul class="pl-4 md:pl-12 hidden lg:flex items-center justify-start gap-6 md:gap-8 py-3 sm:justify-center">
+            <li>
+              <a routerLink="/inicio" routerLinkActive="active" title="" class=" flex pairar font-roboto text-xl font-semibold text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                Inicio
+              </a>
+            </li>
+
+            <li class="shrink-0">
+                <a href="/quem-somos" title="" class="flex pairar font-roboto text-xl text-black font-semibold hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                Quem Somos <!--Dara-->
+                </a>
+              </li>
+
+            <li class="shrink-0">
+              <a href="/painel" title="" class="flex pairar font-roboto text-xl text-black font-semibold hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                Painel
+              </a>
+            </li>
+            <li class="shrink-0">
+              <a routerLink="/bazar" routerLinkActive="active" title="" class="pairar font-roboto text-xl font-semibold text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                Bazar
+              </a>
+            </li>
+            <li class="shrink-0">
+              <a href="/contato" title="" class="pairar font-roboto text-xl text-black font-semibold hover:text-primary-700 dark:text-white dark:hover:text-primary-500">
+                Vitrine
+              </a>
+            </li>
+  
+          </ul>
+        </div>
+  
+        <div class="flex items-center lg:space-x-2">
+           <ng-container *ngIf="!estaLogado(); else showCarrinho">
+            </ng-container>
+            <ng-template #showCarrinho>
+              <div>
+                <button id="myCartDropdownButton1" data-dropdown-toggle="myCartDropdown1" type="button" class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+                  <span class="sr-only">
+                    Carrinho
+                  </span>
+                  <svg class="w-5 h-5 lg:me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312"/>
+                  </svg> 
+                  <span class="hidden sm:flex"> Carrinho </span>
+                  <svg class="hidden sm:flex w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                  </svg>              
+                </button>
+
+                <div id="myCartDropdown1" class="hidden z-10 mx-auto max-w-sm space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800">
+                  <div  class="" aria-modal="true" role="dialog" tabindex="-1">                    
+                                           
+                          <button class="absolute end-4 top-4 text-gray-600 transition hover:scale-110">
+                            
+                          </button>
+
+                      <div class="mt-4 space-y-6">
+                        <ul class="space-y-4">
+                          <div *ngFor="let item of carrinho" >
+                            <li class="flex items-center gap-4">
+                              <img
+                                [src]="item.imagem"
+                                alt=""
+                                class="size-16 rounded-sm object-cover"
+                              />
+                                      
+
+                              <div>
+                                
+                                <h3 class="text-sm text-gray-900"> {{ item.nome }}</h3>
+
+                                <dl class="mt-0.5 space-y-px text-[10px] text-gray-600">
+                                  <div>
+                                    <dt class="inline">Tamanho :</dt>
+                                    <dd class="inline">G</dd>
+                                  </div>
+                                  <!--
+                                  <div>
+                                    <dt class="inline">Color:</dt>
+                                    <dd class="inline">White</dd>
+                                  </div>-->
+                                </dl>
+                              </div>
+
+                              <div class="flex flex-1 items-center justify-end gap-2">
+                                <form>
+                                  <label for="Line1Qty" class="sr-only"> Quantity </label>
+
+                    
+                                </form>
+                    <div class="flex items-center space-x-2">
+                                            <button (click)="atualizarQuantidade(item.id, item.quantidade - 1)" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" />
+                                              </svg>
+                                            </button>
+                                                    <input
+                                                          type="number"
+                                                          [(ngModel)]="item.quantidade"
+                                                          id="Line1Qty"
+                                                          class="h-8 w-12 rounded-sm border-gray-200 bg-gray-50 p-0 text-center text-xs text-gray-600 [-moz-appearance:_textfield] focus:outline-hidden [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none"
+                                                        />
+                                            <button (click)="atualizarQuantidade(item.id, item.quantidade + 1)" class="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                <path d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" />
+                                              </svg>
+                                            </button>
+                                          </div>
+                                <button class="text-gray-600 transition hover:text-red-600">
+                                  <span  class="sr-only">Remove item</span>
+                                  <div (click)="removerDoCarrinho(item.id)">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                    class="size-4"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                    />
+                                  </svg></div>
+                                </button>
+                              </div>
+                            </li>
+                          </div>
+
+                        </ul>
+
+                        <div class="space-y-4 text-center">
+                          <a
+                            href="/carrinho"
+                            class="block rounded-sm border border-gray-600 px-5 py-3 text-sm text-gray-600 transition hover:ring-1 hover:ring-gray-400 hover:bg-blue-600 hover:text-white"
+                          >
+                            Carrinho
+                          </a>
+                          <!--
+                          <a
+                            href="#"
+                            class="block rounded-sm bg-gray-700 px-5 py-3 text-sm text-gray-100 transition hover:bg-gray-600"
+                          >
+                            Comprar
+                          </a>-->
+                          <!--
+                          <a
+                            href="#"
+                            class="inline-block text-sm text-gray-500 underline underline-offset-4 transition hover:text-gray-600"
+                          >
+                            Continue shopping
+                          </a>-->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </ng-template>
+             <ng-container *ngIf="!estaLogado(); else showEntrar">
+                   
+              <a routerLink="/entrar" routerLinkActive="active">
+                  <button type="button" class="
+                    group flex items-center justify-center 
+                    
+                    bg-blue-700 text-white border-2 border-blue-900
+                    hover:bg-white hover:text-blue-700 hover:border-blue-700
+                    
+                    font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                    transition-all duration-300 ease-in-out
+                    focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800
+                  ">
+                    <svg class="
+                      w-4 h-4 mr-2 
+                      transform transition-transform duration-300 
+                      group-hover:translate-x-1
+                    "
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                    
+                    Entrar
+                  </button>
+              </a>
+              </ng-container>
+                <ng-template #showEntrar>
+                 <a routerLink="/login" routerLinkActive="active">
+
+                    <button id="userDropdownButton1" data-dropdown-toggle="userDropdown1" type="button" class="inline-flex items-center rounded-lg justify-center p-2 hover:bg-gray-100 dark:hover:bg-gray-700 text-sm font-medium leading-none text-gray-900 dark:text-white">
+                        <svg class="w-5 h-5 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                        </svg>      
+                          Menu 
+                        
+                        <svg class="w-4 h-4 text-gray-900 dark:text-white ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 9-7 7-7-7"/>
+                        </svg> 
+                    </button>
+                </a>
+                </ng-template>
+          <div id="userDropdown1" class="hidden z-10 w-56 divide-y divide-gray-100 overflow-hidden overflow-y-auto rounded-lg bg-white antialiased shadow dark:divide-gray-600 dark:bg-gray-700">
+            <ul class="p-2 text-start text-sm font-medium text-gray-900 dark:text-white">
+              <li><a href="/perfil" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Perfil </a></li>
+              <li><a href="/pedidos" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Pedidos </a></li>
+              <li><a href="/cadastrar-produto" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Cadastrar Produtos </a></li>
+              <li><a href="/painel" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Painel </a></li>
+              <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Configuração </a></li>
+              <li><a href="#" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> Endereço | Entrega </a></li>
+              <li><a href="/entrar" title="" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600">  </a></li>
+            </ul>
+        
+               <ng-container *ngIf="estaLogado(); else showLogin">
+                
+                <a (click)="deslogar()" href="#" class="inline-flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> 
+                  Sair 
+                </a>
+              </ng-container>
+
+              <ng-template #showLogin>
+                <a routerLink="/entrar" class="inline-flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-600"> 
+                  Entrar 
+                </a>
+              </ng-template>
+          </div>
+  
+          <button type="button" data-collapse-toggle="ecommerce-navbar-menu-1" aria-controls="ecommerce-navbar-menu-1" aria-expanded="false" class="inline-flex lg:hidden items-center justify-center hover:bg-gray-100 rounded-md dark:hover:bg-gray-700 p-2 text-gray-900 dark:text-white">
+            <span class="sr-only">
+              Open Menu
+            </span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5 7h14M5 12h14M5 17h14"/>
+            </svg>                
+          </button>
+        </div>
+      </div>
+  
+      <div id="ecommerce-navbar-menu-1" class="bg-gray-50 dark:bg-gray-700 dark:border-gray-600 border border-gray-200 rounded-lg py-3 hidden px-4 mt-4">
+        <ul class="text-gray-900 dark:text-white text-sm font-medium dark:text-white space-y-3">
+          <li>
+            <a href="/inicio" class="hover:text-primary-700 dark:hover:text-primary-500">Inicio</a>
+          </li>
+          <li>
+            <a href="/quem-somos" class="hover:text-primary-700 dark:hover:text-primary-500">Quem Somos</a>
+          </li>
+          <li>
+            <a href="/painel" class="hover:text-primary-700 dark:hover:text-primary-500">Painel</a>
+          </li>
+          <li>
+            <a href="/bazar" class="hover:text-primary-700 dark:hover:text-primary-500">Bazar</a>
+          </li>
+          <li>
+            <a href="/vitrine" class="hover:text-primary-700 dark:hover:text-primary-500">Vitrine</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--
+    <div id="myCartDropdown1" class="hidden z-10 mx-auto max-w-sm space-y-4 overflow-hidden rounded-lg bg-white p-4 antialiased shadow-lg dark:bg-gray-800">
+    
+            <div>
+                <div class="flex items-center justify-between p-2 border-b border-gray-200 dark:border-gray-700">
+                  <div class="flex items-center space-x-4">
+                    <img [src]="item.imagem" alt="{{ item.nome }}" class="w-12 h-12 object-cover rounded-full">
+                    <div>
+                      <p class="text-lg font-semibold text-gray-800 dark:text-white">{{ item.nome }}</p>
+                      <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.valor | currency:'BRL':'symbol':'1.2-2' }} - Quantidade: {{ item.quantidade }}</p>
+                      
+                    </div>
+                  </div>
+                  <button  class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M9 2a1 1 0 00-1 1v1H4a1 1 0 100 2h1v9a2 2 0 002 2h6a2 2 0 002-2V6h1a1 1 0 100-2h-4V3a1 1 0 00-1-1H9zm0 3h2v1H9V5zm1 2a1 1 0 011 1v7a1 1 0 01-2 0V8a1 1 0 011-1z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+                <a href="carrinho" class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-600">
+                    Ver detalhes 
+                </a>
+                <a href="carrinho">
+                  <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> Carrinho </button>
+                  </a>
+              </div>
+            
+    
+        
+            <a href="#" title="" class="mb-2 me-2 inline-flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" role="button"> Proceed to Checkout </a>
+            
+          </div>
+        -->
+
+          
+            <!-- <div *ngFor="let produto of produtos">
+              <div class="produto-card">
+                <img [src]="produto.foto" alt="{{ produto.nome }}" class="produto-imagem">
+                <p class="produto-nome">{{ produto.nome }}</p>
+                <p class="produto-descricao">{{ produto.descricao }}</p>
+                <p class="produto-valor">{{ produto.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+                <button type="button" class="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="adicionarAoCarrinho(produto)">
+                  <svg class="-ms-2 me-2 h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                  </svg>
+                  <p class="text-xs">
+                    Comprar
+                  </p>
+                </button>
+              </div>
+            </div>-->
+          

@@ -1,0 +1,100 @@
+<div class="blue-gradient-background w-full h-72 flex flex-col items-center justify-start pt-16">
+  <div class="text-white text-6xl font-bold">
+    Identidade Cultural
+  </div>
+</div>
+<div class="bg-gray-100 min-h-screen py-16 px-4 md:px-16 flex flex-col items-center">
+
+  <div class="w-full max-w-6xl">
+    
+    <div class="flex justify-between items-end mb-8">
+      
+      <div class="flex flex-col w-[40%]">
+        <div class="flex items-center space-x-6">
+          <button 
+            *ngFor="let item of menuItems" 
+            [class.text-blue-800]="item.name === activeTab" 
+            [class.text-gray-500]="item.name !== activeTab"
+            (click)="selectTab(item)"
+            #menuButton
+            class="font-semibold"
+          >
+            {{ item.name }}
+          </button>
+        </div>
+        <div class="relative mt-2">
+          <div class="absolute w-full h-0.5 bg-gray-300"></div>
+          <div 
+            class="absolute bottom-0 h-1 bg-blue-600 transition-all duration-300 ease-in-out" 
+            [style.left]="activeTabPosition.left + 'px'"
+            [style.width]="activeTabPosition.width + 'px'"
+          ></div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="flex flex-col md:flex-row w-full gap-8 items-start">
+      
+      <div class="bg-white rounded-xl shadow-lg w-full md:w-[40%] p-10 md:p-12">
+        <div class="p-4">
+          <h2 class="text-3xl font-bold text-blue-800 mb-4">{{ activeContent.title }}</h2>
+          <p class="text-base text-gray-600 mb-6">{{ activeContent.subtitle }}</p>
+          
+          <div class="space-y-4">
+            <div *ngFor="let button of activeContent.buttons; let i = index">
+              <a 
+                [href]="button.link"
+                class="block w-full text-center py-3 rounded-lg font-semibold transition-colors duration-300"
+                [ngClass]="i === 0 ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-blue-600 border border-blue-600 hover:bg-gray-100'"
+              >
+                {{ button.name }}
+              </a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="w-full md:w-[60%] p-4">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+          <ng-container *ngFor="let card of actionCards">
+            <div 
+              class="
+                group 
+                rounded-xl p-4 
+                flex flex-col justify-between items-center text-center
+                shadow-md cursor-pointer 
+                transition-all duration-300 
+                border border-black
+                hover:scale-105 hover:shadow-lg
+              "
+              [ngClass]="card.isSpecial ? 'bg-blue-600 text-white hover:bg-blue-700' : 'bg-white text-blue-600 hover:bg-blue-600 hover:text-white'"
+              (click)="selectTab({ name: card.linkedTab })"
+            >
+              <div class="flex flex-col items-center">
+                <svg *ngIf="card.icon === 'fatura'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20 7H17V4L14 7H10L7 4V7H4C3.44772 7 3 7.44772 3 8V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V8C21 7.44772 20.5523 7 20 7ZM15 15H9V13H15V15Z" />
+                </svg>                
+                <svg *ngIf="card.icon === 'boleto'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5C3.34315 3 2 4.34315 2 6V18C2 19.6569 3.34315 21 5 21H19C20.6569 21 22 19.6569 22 18V6C22 4.34315 20.6569 3 19 3ZM19 5V18C19 18.5523 18.5523 19 18 19H6C5.44772 19 5 18.5523 5 18V6C5 5.44772 5.44772 5 6 5H18C18.5523 5 19 5.44772 19 6ZM9.5 12C11.432 12 13 10.432 13 8.5C13 6.568 11.432 5 9.5 5C7.568 5 6 6.568 6 8.5C6 10.432 7.568 12 9.5 12ZM16 18H3.98754C4.64687 15.6599 6.84073 14 9.5 14C12.1593 14 14.3531 15.6599 15.0125 18H16Z" /></svg>
+                <svg *ngIf="card.icon === 'cliente'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M16 22H8C6.34315 22 5 20.6569 5 19V5C5 3.34315 6.34315 2 8 2H16C17.6569 2 19 3.34315 19 5V19C19 20.6569 17.6569 22 16 22ZM15 13H9V11H15V13ZM15 9H9V7H15V9ZM15 17H9V15H15V17Z" /></svg>
+                <svg *ngIf="card.icon === 'perfil'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C16.9706 2 21 6.02944 21 11C21 15.9706 16.9706 20 12 20C7.02944 20 3 15.9706 3 11C3 6.02944 7.02944 2 12 2ZM12 4C8.13401 4 5 7.13401 5 11C5 14.866 8.13401 18 12 18C15.866 18 19 14.866 19 11C19 7.13401 15.866 4 12 4ZM12 7C14.2091 7 16 8.79086 16 11C16 13.2091 14.2091 15 12 15C9.79086 15 8 13.2091 8 11C8 8.79086 9.79086 7 12 7ZM12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9Z" /></svg>
+                <svg *ngIf="card.icon === 'duvidas'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 20C7.58172 20 4 16.4183 4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20ZM12 18C12.5523 18 13 17.5523 13 17C13 16.4477 12.5523 16 12 16C11.4477 16 11 16.4477 11 17C11 17.5523 11.4477 18 12 18ZM12 6C14.7614 6 17 8.23858 17 11H15C15 9.34315 13.6569 8 12 8C10.3431 8 9 9.34315 9 11C9 12.6569 10.3431 14 12 14H13V15H11V13H12C10.8954 13 10 12.1046 10 11C10 9.89543 10.8954 9 12 9C13.1046 9 14 9.89543 14 11H12C10.8954 11 10 11.8954 10 13H12Z" /></svg>
+                <svg *ngIf="card.icon === 'acesso'" class="w-7 h-7 mb-3 transition-colors duration-300" [class.text-white]="card.isSpecial" [class.text-blue-600]="!card.isSpecial" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M15 12H9V14H15V12Z" /><path d="M19 21H5C3.34315 21 2 19.6569 2 18V6C2 4.34315 3.34315 3 5 3H19C20.6569 3 22 4.34315 22 6V18C22 19.6569 20.6569 21 19 21ZM4 6V18C4 18.5523 4.44772 19 5 19H19C19.5523 19 20 18.5523 20 18V6C20 5.44772 19.5523 5 19 5H5C4.44772 5 4 5.44772 4 6Z" /></svg>
+                <h2 class="font-semibold text-base">
+                  {{ card.title }}
+                </h2>
+              </div>
+              <div *ngIf="card.subtitle">
+                <p class="text-sm text-gray-500 transition-colors duration-300"
+                  [ngClass]="card.isSpecial ? 'text-white' : 'text-gray-500 group-hover:text-white'">
+                  {{ card.subtitle }}
+                </p>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

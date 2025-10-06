@@ -1,0 +1,83 @@
+<div class="diagonal-square">
+    <div class="hero-content">
+      <h1>Bem-vindo à Associação de Moradores</h1>
+      <button>Saiba Mais</button>
+    </div>
+    <img class="hero-image w-46 h-46" src="../../../assets/robo-ai.png" alt="Imagem Representativa" >
+  </div>
+
+  <div class="flex items-center justify-center">
+    <div class="w-4/5 bg-gray-100 p-6 shadow-md rounded-md text-center">
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-4xl dark:text-white">
+            Sobre a Associação</h1>
+
+        <p class="mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            Aqui você pode acompanhar nossas funcionalidades.
+        </p>
+
+        <p class="font-roboto">
+            Somos uma organização sem fins lucrativos comprometida em melhorar a qualidade de vida de todos os residentes da nossa comunidade.
+        </p>
+
+        <p class="font-roboto">
+
+            Nossa missão é unir esforços, ouvir as necessidades dos moradores e trabalhar juntos para encontrar soluções
+            eficazes para os desafios do bairro.
+        </p>
+        <p class="font-roboto">
+            Acreditamos que, ao unir nossas vozes e forças, podemos criar um ambiente mais seguro, limpo,
+            saudável e acolhedor para todos.
+        </p>
+
+        <p class="font-roboto">
+            Quando os moradores se unem em prol de um objetivo comum, o potencial para a transformação é ilimitado.
+        </p>
+
+
+        <p class="font-roboto">
+            A união comunitária permite que todos contribuam com suas habilidades, conhecimentos e recursos para o bem-estar coletivo.
+        </p>
+
+
+        <p class="font-roboto">
+            Juntos, podemos enfrentar desafios, resolver problemas e criar um futuro melhor para nossas famílias e vizinhos.
+        </p>
+
+
+
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <div class="feature-card" *ngFor="let feature of features">
+                <div class="icon">
+                  <fa-icon [icon]="faCheckCircle" class="text-blue-500 text-4xl mb-4"></fa-icon>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">{{ feature.title }}</h3>
+                <p>{{ feature.text }}</p>
+              </div>
+            </div>
+          </div>
+
+    </div>
+  </div>
+
+
+
+  <section class="bg-white dark:bg-gray-900">
+    <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
+        <div class="font-light text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Sala de Conferencia </h2>
+            <p class="mb-4">Nossa sala é o centro de encontros comunitários, debates significativos e tomadas de decisões importantes. Localizada no coração de nossa comunidade, a Sala de Conferência está equipada com tecnologia de ponta e oferece um ambiente acolhedor e funcional para todos os tipos de reuniões..</p>
+            <h2>
+              Networking
+            </h2>
+            <p>
+              Networking é a prática de conectar pessoas e permitir a troca de informações
+              entre eles. Isso parece bastante simples, mas para entender como funciona:
+            </p>
+          </div>
+        <div class="grid grid-cols-2 gap-4 mt-8">
+            <img class="w-full rounded-lg" src="https://blog.hcchotels.com.br/wp-content/uploads/2022/07/saladeeventos.jpg" alt="office content 1">
+            <img class="mt-4 w-full lg:mt-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/content/office-long-1.png" alt="office content 2">
+        </div>
+    </div>
+</section>

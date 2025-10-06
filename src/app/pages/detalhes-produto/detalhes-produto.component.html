@@ -1,0 +1,279 @@
+<div *ngIf="isLoading">Carregando...</div>
+<div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+<div *ngIf="produto">
+
+<section class="py-8 bg-white md:py-16 dark:bg-gray-900 antialiased">
+    <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+        <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+          <h1 class="mb-2 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-4xl text-black-900 dark:text-white">
+              {{ produto.nome }}
+          </h1>
+          <h2 class="mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-3xl xl:text-3xl text-gray-400 dark:text-white">
+              {{ produto.categoria.nome }}
+          </h2>
+          <img class="w-full dark:hidden" [src]="produto.imagem"  alt="" />
+          <img class="w-full hidden dark:block" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/imac-front-dark.svg" alt="" />
+        </div>
+
+<div class="max-w-md mx-auto p-4 bg-white rounded-lg shadow-lg">
+  <!--
+  <div class="text-right mb-2">
+    <a href="#" class="text-blue-500 underline">Quer buscar em outra cidade? &gt;</a>
+  </div>-->
+  <div class="text-center mb-4">
+    <h2 class="text-4xl font-bold text-blue-600">  Preço: R{{ produto.preco | currency }}</h2>
+    <p class="text-gray-600">preço à vista</p>
+  </div>
+  <form  [formGroup]="perfilForm">
+    <div class="mb-4">
+      <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Nome:</label>
+      <input type="text" id="name"  formControlName="nome" [readonly]="true" class="w-full p-3 border border-gray-300 rounded-md" placeholder="Nome" />
+    </div>
+    <div class="mb-4">
+      <label for="email" class="block text-gray-700 text-sm font-bold mb-2">E-mail:</label>
+      <input type="email" id="email"  formControlName="email"  [readonly]="true" class="w-full p-3 border border-gray-300 rounded-md" placeholder="Email" />
+    </div>
+    <div class="mb-4">
+      <label for="phone" class="block text-gray-700 text-sm font-bold mb-2">Telefone:</label>
+      <input type="tel" id="phone"  formControlName="telefone"  [readonly]="true" class="w-full p-3 border border-gray-300 rounded-md" placeholder="DDD e Telefone" />
+    </div>
+    <div class="mb-4">
+      <label for="observations" class="block text-gray-700 text-sm font-bold mb-2">Observações</label>
+      <textarea id="endereco" formControlName="endereco" [readonly]="true" class="w-full p-3 border border-gray-300 rounded-md" placeholder=" "></textarea>
+    </div>
+    <!--
+    <div class="mb-4">
+      <label class="flex items-center">
+        <input type="checkbox" class="mr-2 leading-tight" />
+        <span class="text-sm text-gray-700">Não quero cadastrar meu e-mail e telefone para receber ofertas e promoções do iCarros</span>
+      </label>
+    </div>-->
+    <div class="mb-4 text-sm text-gray-600">
+      *Ao interagir com os botões abaixo você afirma ter mais de 18 anos e aceita nossos Termos de Uso e Política de Privacidade. Compartilharemos seus dados com esse e outros anunciantes parceiros para ofertas similares à sua busca.
+    </div>
+<div class="flex justify-between mb-4">
+  <a href="/perfil">
+    <button type="button" target="_blank" class="bg-green-500 text-white px-16 py-3 rounded-lg text-lg">Editar</button>
+  </a>
+  <a [href]="'https://wa.me/'+usuarioLogado?.telefone" target="_blank">
+    <button type="button" class="bg-green-500 text-white px-16 py-3 rounded-lg text-lg">Whatsapp</button>
+  </a>  
+</div>
+    <div class="text-center mb-4">ou</div>
+    <div class="text-center">
+      <button type="button" (click)="adicionarAoCarrinho(produto)" class="bg-blue-600 text-white px-6 py-3 rounded-lg w-full flex items-center justify-center text-lg">
+        Comprar <span class="ml-2"></span>
+      </button>
+    </div>
+  </form>
+</div>
+
+        <div class="mt-6 sm:mt-8 lg:mt-0">
+        <!--
+          <h1
+            class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
+          >
+            {{ produto.nome }}
+          </h1>  -->
+          <div class="mt-4 sm:items-center sm:gap-4 sm:flex"> 
+            <!--
+            <p
+              class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
+            >
+            Preço: {{ produto.preco | currency }}
+            </p>  -->
+      
+            <div class="flex items-center gap-2 mt-2 sm:mt-0">
+              <div class="flex items-center gap-1">
+                <svg
+                  class="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
+                  />
+                </svg>
+                <svg
+                  class="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
+                  />
+                </svg>
+                <svg
+                  class="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
+                  />
+                </svg>
+                <svg
+                  class="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
+                  />
+                </svg>
+                <svg
+                  class="w-4 h-4 text-yellow-300"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"
+                  />
+                </svg>
+              </div>
+              <p
+                class="text-sm font-medium leading-none text-gray-500 dark:text-gray-400"
+              >
+                (5.0)
+              </p>
+              <a
+                href="#"
+                class="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
+              >
+                345 Reviews
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+            <button type="button" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                
+            <svg
+                class="w-5 h-5 -ms-2 me-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
+                />
+              </svg>
+                Favorito </button>
+
+            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+              Default
+            </button>
+
+            <div *ngIf="produto.ehAutor"  >
+              <a href="editar-produto/{{produto.id}}" 
+                    class="flex h-full items-center justify-center">
+                  <button 
+                    type="button" 
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    Editar Produto
+                  </button>
+                  </a>
+            </div>
+            <a
+              href="#"
+              title=""
+              class="text-white mt-4 sm:mt-0 bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800 flex items-center justify-center"
+              role="button"
+            >
+              <svg
+                class="w-5 h-5 -ms-2 me-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                />
+              </svg>
+
+              Add to cart
+            </a>
+          </div>
+
+          <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
+
+          <p class="mb-6 text-gray-500 dark:text-gray-400">
+             Vendedor: {{produto.autor.nome}} 
+          </p>
+
+          <p class="text-gray-500 dark:text-gray-400">
+              Descricao: {{ produto.descricao }}
+          </p>
+        </div>
+    <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl mx-auto my-10">
+      <div class="flex flex-col items-start md:items-center">
+        <h2 class="text-xl md:text-2xl font-semibold text-gray-800 pr-4 mb-4">
+          O que você achou da experiência?
+        </h2>
+        
+        <div class="flex space-x-4 md:space-x-8">
+          <div class="flex flex-col items-center cursor-pointer hover:opacity-75 transition-opacity">
+            <img src="https://em-content.zobj.net/source/microsoft/319/pouting-face_1f621.png" alt="Muito ruim" class="w-8 h-8 md:w-10 md:h-10">
+            <span class="text-xs md:text-sm text-gray-600 mt-2">Muito ruim</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer hover:opacity-75 transition-opacity">
+            <img src="https://em-content.zobj.net/source/microsoft/319/crying-face_1f622.png" alt="Ruim" class="w-8 h-8 md:w-10 md:h-10">
+            <span class="text-xs md:text-sm text-gray-600 mt-2">Ruim</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer hover:opacity-75 transition-opacity">
+            <img src="https://em-content.zobj.net/source/microsoft/319/confused-face_1f615.png" alt="Regular" class="w-8 h-8 md:w-10 md:h-10">
+            <span class="text-xs md:text-sm text-gray-600 mt-2">Regular</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer hover:opacity-75 transition-opacity">
+            <img src="https://em-content.zobj.net/source/microsoft/319/expressionless-face_1f611.png" alt="Bom" class="w-8 h-8 md:w-10 md:h-10">
+            <span class="text-xs md:text-sm text-gray-600 mt-2">Bom</span>
+          </div>
+
+          <div class="flex flex-col items-center cursor-pointer hover:opacity-75 transition-opacity">
+            <img src="https://em-content.zobj.net/source/microsoft/319/winking-face-with-tongue_1f61c.png" alt="Muito bom" class="w-8 h-8 md:w-10 md:h-10">
+            <span class="text-xs md:text-sm text-gray-600 mt-2">Muito bom</span>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </section>

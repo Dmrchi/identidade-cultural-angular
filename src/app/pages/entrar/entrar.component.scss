@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.flex.items-start {
+  align-items: flex-start;
+}
+
+.h-screen {
+  height: 100vh;
+}
+
+.shadow-lg {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.border-gray-200 {
+  border-color: #e5e7eb;
+}
+
+.bg-gray-100 {
+  background-color: #f3f4f6;
+}
+
+.focus:ring-2 {
+  outline: none;
+  ring-width: 2px;
+  ring-color: #3b82f6;
+}
+
+.bg-blue-900 {
+  background-color: #1e3a8a;
+}
+
+.hover:bg-blue-800 {
+  background-color: #172554;
+}
+
+.bg-gray-100:hover {
+  background-color: #e5e7eb;
+}
