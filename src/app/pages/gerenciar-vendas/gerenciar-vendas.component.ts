@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ViewChild } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import {
   ApexChart,
@@ -39,7 +39,8 @@ interface VendasPorMes {
   styleUrl: './gerenciar-vendas.component.scss'
 })
 export class GerenciarVendasComponent implements OnInit {
-  
+
+  @ViewChild('chart') chart!: ChartComponent;
   public chartOptions: ChartOptions;
   public pedidos = signal<ItemPedido[]>([]);
   public loading = signal(true);
@@ -49,13 +50,10 @@ export class GerenciarVendasComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fetchPedidos();
+    this.fetchAllPedidos();
   }
 
-  /**
-   * Inicializa o objeto de configuração do gráfico com valores padrão.
-   * Isso garante que a propriedade 'chartOptions' não seja indefinida.
-   */
+
   private initializeChartOptions(): ChartOptions {
     return {
       series: [{
@@ -97,74 +95,80 @@ export class GerenciarVendasComponent implements OnInit {
       }
     };
   }
-  
-  /**
-   * Busca os pedidos e processa os dados para o gráfico.
-   */
-  fetchPedidos(): void {
+
+  private fetchAllPedidos(): void {
     this.loading.set(true);
-    this.pedidoService.buscarPedidosVendidos(0, 10)
-      .pipe(
-        catchError((err) => {
-          console.error('Erro ao buscar pedidos:', err);
-          this.pedidos.set([]);
-          this.loading.set(false);
-          return throwError(() => err);
-        })
-      )
-      .subscribe({
-        next: (response: PaginaResponse<ItemPedido>) => {
-          this.pedidos.set(response.content);
-          this.processarEAtualizarGrafico(response.content);
-          this.loading.set(false);
-        }
-      });
+    const allPedidos: ItemPedido[] = [];
+    const pageSize = 100;
+    const fetchPage = (page: number) => {
+      this.pedidoService.buscarPedidosVendidos(page, pageSize)
+        .pipe(
+          catchError((err) => {
+            console.error('Erro ao buscar pedidos:', err);
+            this.pedidos.set([]);
+            this.loading.set(false);
+            return throwError(() => err);
+          })
+        )
+        .subscribe({
+          next: (response: PaginaResponse<ItemPedido>) => {
+            allPedidos.push(...response.content);
+            if (page < response.totalPages - 1) {
+              fetchPage(page + 1);
+            } else {
+              this.pedidos.set(allPedidos);
+              this.processarEAtualizarGrafico(allPedidos);
+              this.loading.set(false);
+            }
+          }
+        });
+    };
+    fetchPage(0);
   }
 
-  /**
-   * Processa a lista de pedidos e atualiza a configuração do gráfico.
-   * @param pedidos A lista de itens de pedido.
-   */
   private processarEAtualizarGrafico(pedidos: ItemPedido[]): void {
     const vendasAgrupadas = new Map<string, number>();
 
-    // Agrupa e soma as vendas por mês
     pedidos.forEach(itemPedido => {
       const data = new Date(itemPedido.pedido.dataEntrega);
       const mes = `${data.getFullYear()}-${(data.getMonth() + 1).toString().padStart(2, '0')}`;
+
       const preco = itemPedido.produto.preco;
-      const totalAtual = vendasAgrupadas.get(mes) || 0;
-      vendasAgrupadas.set(mes, totalAtual + preco);
+      const quantidade = itemPedido.quantidade || 1;
+
+      if (typeof preco === 'number' && !isNaN(preco)) {
+        const valorItem = preco * quantidade;
+        const totalAtual = vendasAgrupadas.get(mes) || 0;
+        vendasAgrupadas.set(mes, totalAtual + valorItem);
+      } else {
+        console.warn('Item de pedido ignorado por ter preço inválido:', itemPedido);
+      }
     });
 
-    // Converte o mapa para o formato ideal para o gráfico
     const dadosParaGrafico: VendasPorMes[] = Array.from(vendasAgrupadas.entries()).map(([mes, totalVendas]) => ({
       mes: this.formatarMes(mes),
       totalVendas: totalVendas
     }));
 
-    // Separa os dados em categorias (eixo X) e valores (eixo Y)
     const labels = dadosParaGrafico.map(item => item.mes);
     const data = dadosParaGrafico.map(item => item.totalVendas);
 
-    // Atualiza o objeto de configuração do gráfico.
-    // Isso faz com que o gráfico seja renderizado com os novos dados.
-    this.chartOptions = {
-      ...this.chartOptions, // Mantém a configuração existente
-      series: [{
-        name: "Total de Vendas",
-        data: data,
-        color: '#1a237e'
-      }],
-      xaxis: {
-        categories: labels,
-      }
-    };
+    // Agora que `this.chart` está acessível, usamos o método `updateOptions`.
+    // É a maneira mais segura e recomendada pela biblioteca ApexCharts.
+    if (this.chart) {
+        this.chart.updateOptions({
+            series: [{
+                name: "Total de Vendas",
+                data: data,
+                color: '#1a237e'
+            }],
+            xaxis: {
+                categories: labels
+            }
+        });
+    }
   }
 
-  /**
-   * Formata a string do mês para um formato legível.
-   */
   private formatarMes(mesString: string): string {
     const [ano, mes] = mesString.split('-');
     const data = new Date(parseInt(ano), parseInt(mes) - 1, 1);
@@ -172,3 +176,4 @@ export class GerenciarVendasComponent implements OnInit {
     return data.toLocaleDateString('pt-BR', options);
   }
 }
+
