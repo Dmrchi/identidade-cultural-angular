@@ -20,6 +20,7 @@ import { PainelComponent } from './pages/painel/painel.component';
 
 import { authGuard } from './guard/auth.guard';
 import { GerenciarVendasComponent } from './pages/gerenciar-vendas/gerenciar-vendas.component';
+import { BazarPublicoComponent } from './pages/bazar-publico/bazar-publico.component';
 
 
 export const routes: Routes = [
@@ -30,18 +31,18 @@ export const routes: Routes = [
     {
         path: 'entrar',
         component: EntrarComponent
-    },    
+    },
     {
         path: 'painel',
         component: PainelComponent,
         canActivate: [authGuard],
-        
+
     },
     {
         path: 'gerenciar-vendas',
         component: GerenciarVendasComponent,
         canActivate: [authGuard],
-        
+
     },
     {
         path: 'perfil',
@@ -71,19 +72,19 @@ export const routes: Routes = [
         path: 'loja',
         component: LojaComponent,
         canActivate: [authGuard]
-    },       
+    },
     {
         path: 'editar-produto/:id',
         component: EditarProdutoComponent,
         canActivate: [authGuard]
-    },   
+    },
     {
         path: 'cadastrar-produto',
         component: CadastrarProdutoComponent,
         canActivate: [authGuard]
     },
     {
-        path: 'detalhes-produto/:id', 
+        path: 'detalhes-produto/:id',
         component: DetalhesProdutoComponent
     },
     {
@@ -101,6 +102,10 @@ export const routes: Routes = [
     {
         path: 'bazar',
         component: BazarComponent
+    },
+    {
+        path: '/bazar-publico',
+        component: BazarPublicoComponent
     },
     {
         path: 'demanda',
