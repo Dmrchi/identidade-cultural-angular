@@ -104,7 +104,7 @@ export const routes: Routes = [
         component: BazarComponent
     },
     {
-        path: '/bazar-publico',
+        path: 'bazar-publico',
         component: BazarPublicoComponent
     },
     {
