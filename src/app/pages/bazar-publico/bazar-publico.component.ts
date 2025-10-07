@@ -99,22 +99,12 @@ export class BazarPublicoComponent {
   }
 
   carregarProdutos(): void {
-    const token = this.authService.getTokenLocalStorage();
-    if (!token) {
-      console.error('Nenhum token de autenticação encontrado. O usuário precisa fazer login.');
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
 
     let params = new HttpParams()
       .set('page', this.page.toString())
       .set('size', this.size.toString());
 
-    this.http.get<Page<any>>(`${this.apiUrl}/produtos`, { headers: headers, params: params })
+    this.http.get<Page<any>>(`${this.apiUrl}/produtos`, { params: params })
       .subscribe({
         next: (data) => {
           this.produtos = data.content;
@@ -207,7 +197,9 @@ export class BazarPublicoComponent {
     }
   }
 
-
+  getCategoriasDosProdutosLivre(): Observable<Categoria[]> {
+      return this.http.get<Categoria[]>(`${this.apiUrl}/categorias`);
+  }
 
 selectCategory(categoria: Categoria): void {
   this.selectedCategoryId = categoria.id.toString();
