@@ -4,7 +4,7 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { Usuario } from '../../pages/pedidos/pedidos.component';
 import { AuthService } from '../autenticacao/auth.service';
 import { Perfil, UsuarioUpdate } from '../../pages/perfil/perfil.component';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'

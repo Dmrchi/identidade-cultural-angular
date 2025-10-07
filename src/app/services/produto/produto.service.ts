@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError, map } from 'rxjs';
 import { Produto } from '../../pages/detalhes-produto/detalhes-produto.component'; // Adjust the import path as necessary
 import { AuthService } from '../autenticacao/auth.service';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 @Injectable({
   providedIn: 'root',
 })

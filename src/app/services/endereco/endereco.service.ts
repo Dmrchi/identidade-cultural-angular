@@ -3,7 +3,7 @@ import { EnderecoPayload, EnderecoResponse, ViaCepResponse } from '../../pages/p
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from '../autenticacao/auth.service';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'

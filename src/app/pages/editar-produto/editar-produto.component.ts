@@ -6,7 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-editar-produto',

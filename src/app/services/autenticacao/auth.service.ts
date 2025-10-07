@@ -5,7 +5,7 @@ import { AuthResponse } from '../../pages/entrar/entrar.component';
 
 
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 export interface RegistrarPayload {
   nome: string;
   email: string;

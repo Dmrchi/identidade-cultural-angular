@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractContro
 import { AuthService } from '../../services/autenticacao/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-cadastrar-produto',

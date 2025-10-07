@@ -8,7 +8,7 @@ import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject
 import { EnderecoService } from '../../services/endereco/endereco.service';
 import { UsuariosService } from '../../services/usuario/usuarios.service';
 import { Perfil } from '../perfil/perfil.component';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 export interface ViaCepResponse {
   cep: string;

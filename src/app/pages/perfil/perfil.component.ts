@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap, throwError } from 'rxjs';
 import { EnderecoService } from '../../services/endereco/endereco.service';
 import { UsuariosService } from '../../services/usuario/usuarios.service';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 export interface Perfil {
   nome: string;

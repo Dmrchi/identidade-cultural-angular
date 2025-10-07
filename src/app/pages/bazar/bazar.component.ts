@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../services/autenticacao/auth.service';
 import { Router } from '@angular/router';
 import { Categoria } from '../detalhes-produto/detalhes-produto.component';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 export interface Produto {
   id?: string;

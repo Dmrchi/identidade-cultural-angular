@@ -7,7 +7,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page } from '../bazar/bazar.component';
 import { FormsModule } from '@angular/forms';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-contato',

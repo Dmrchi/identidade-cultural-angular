@@ -4,7 +4,7 @@ import { PedidoRequest, PedidoResponse } from '../../pages/carrinho-compras/carr
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from '../autenticacao/auth.service';
 import { ItemPedido, PaginaResponse } from '../../pages/pedidos/pedidos.component';
-import { environment } from '../../../environment.prod';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
