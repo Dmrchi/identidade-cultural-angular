@@ -5,6 +5,7 @@ import { AuthResponse } from '../../pages/entrar/entrar.component';
 
 
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environment.prod';
 export interface RegistrarPayload {
   nome: string;
   email: string;
@@ -20,16 +21,16 @@ export class AuthService {
   private readonly AUTH_TOKEN_KEY = 'authToken';
   //private loginSuccess$ = new Subject<void>();
   private loginSuccess$ = new BehaviorSubject<boolean>(this.isLoggedIn());
-  private API_URL = 'http://localhost:8081/api/autenticacao';
+  private readonly apiUrl  = environment.apiUrl+'/api/autenticacao';
   constructor(private http: HttpClient) { }
-  
+
   public login(credentials: { email: string, senha: string }) {
-      return this.http.post<AuthResponse>(this.API_URL+'/login', credentials)
+      return this.http.post<AuthResponse>(this.apiUrl+'/login', credentials)
         .pipe(
           tap(response => {
             if (response && response.token) {
               this.saveTokenLocalStorage(response.token);
-              
+
               console.log('Tentativa de Login!');
               this.loginSuccess$.next(true);
             }
@@ -37,13 +38,13 @@ export class AuthService {
         );
     }
     public register(payload: RegistrarPayload): Observable<AuthResponse> {
-        return this.http.post<AuthResponse>(this.API_URL+'/registrar', payload)
+        return this.http.post<AuthResponse>(this.apiUrl+'/registrar', payload)
           .pipe(
             tap(response => {
               if (response && response.token) {
                 this.saveTokenLocalStorage(response.token);
                 console.log('Registro bem-sucedido, emitindo estado de login!');
-                this.loginSuccess$.next(true); 
+                this.loginSuccess$.next(true);
               }
             })
           );

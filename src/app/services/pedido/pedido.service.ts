@@ -4,13 +4,13 @@ import { PedidoRequest, PedidoResponse } from '../../pages/carrinho-compras/carr
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from '../autenticacao/auth.service';
 import { ItemPedido, PaginaResponse } from '../../pages/pedidos/pedidos.component';
+import { environment } from '../../../environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
-
-private apiUrl = 'http://localhost:8081/api'; // Substitua pela sua URL real
+private readonly apiUrl = environment.apiUrl+'/api';
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
@@ -65,10 +65,10 @@ private apiUrl = 'http://localhost:8081/api'; // Substitua pela sua URL real
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`,
     });
-    
+
     // Log para depuração
     console.log('Enviando pedido:', pedido);
-    
+
     // Envia a requisição e adiciona o tratamento de erro com .pipe()
     return this.http.post<PedidoResponse>(this.apiUrl+'/pedidos', pedido, { headers: headers }).pipe(
       catchError(this.handleError) // Chama o método de tratamento de erro
@@ -86,8 +86,8 @@ private apiUrl = 'http://localhost:8081/api'; // Substitua pela sua URL real
         next: (produto) => {
           console.log('Dados do produto para edição:', produto);
           // Encontrar o objeto da categoria correspondente na listaDeCategorias
-          const categoriaSelecionada = 
-          
+          const categoriaSelecionada =
+
         },
         error: (err) => {
           console.error('Erro ao buscar dados do produto:', err);

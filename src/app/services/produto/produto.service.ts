@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError, map } from 'rxjs';
 import { Produto } from '../../pages/detalhes-produto/detalhes-produto.component'; // Adjust the import path as necessary
 import { AuthService } from '../autenticacao/auth.service';
+import { environment } from '../../../environment.prod';
 @Injectable({
   providedIn: 'root',
 })
 export class ProdutoService {
-  private apiUrl = 'http://localhost:8081/api/produtos';
+    private readonly apiUrl = environment.apiUrl+'/api/produtos';
 
   constructor(private http: HttpClient,
               private authService: AuthService,
@@ -41,7 +42,7 @@ export class ProdutoService {
     if (!token) {
       console.error('Nenhum token de autenticação encontrado.');
       // Retorna um erro para quem chamou a função.
-      return throwError(() => new Error('Não autenticado')); 
+      return throwError(() => new Error('Não autenticado'));
     }
 
     const headers = new HttpHeaders({
@@ -56,7 +57,7 @@ export class ProdutoService {
       })
     );
   }
-  
+
 
   getProdutosLoja(lojaEmail: string): Observable<Produto[]> {
     const token = this.authService.getTokenLocalStorage();

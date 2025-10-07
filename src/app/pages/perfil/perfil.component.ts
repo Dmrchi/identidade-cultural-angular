@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject, switchMap, throwError } from 'rxjs';
 import { EnderecoService } from '../../services/endereco/endereco.service';
 import { UsuariosService } from '../../services/usuario/usuarios.service';
+import { environment } from '../../../environment.prod';
 
 export interface Perfil {
   nome: string;
@@ -60,7 +61,7 @@ export interface EnderecoPayload {
   usuario: UsuarioId;
 }
 export interface EnderecoResponse extends EnderecoPayload {
-  id: string; 
+  id: string;
 }
 interface Produto {
   id: string;
@@ -86,7 +87,7 @@ interface Produto {
   styleUrl: './perfil.component.scss'
 })
 export class PerfilComponent implements OnInit {
-  private apiUrl = 'http://localhost:8081/api/produtos/meus-produtos';
+  private readonly apiUrl = environment.apiUrl+'/api/produtos/meus-produtos';
   contagemCaracteres: number = 0;
 
   usuarioLogado: Perfil | null = null;
@@ -260,7 +261,7 @@ fetchUsuarioLogado(): void {
       this.router.navigate(['/login']);
     }
   }
-  
+
   habilitarEdicao(): void {
     this.editandoPerfil = true;
   }
@@ -279,7 +280,7 @@ fetchUsuarioLogado(): void {
       telefone: dadosAtualizados.telefone,
       foto: dadosAtualizados.foto,
     };
-    
+
     // A lógica complexa foi movida. Agora apenas chamamos o serviço.
     this.usuarioService.atualizarPerfil(usuarioUpdate)
       .subscribe({
@@ -290,7 +291,7 @@ fetchUsuarioLogado(): void {
           this.message = 'Perfil atualizado com sucesso!';
           this.isError = false;
           console.log('Perfil salvo com sucesso:', usuarioAtualizado);
-          
+
           // Recarrega a página após o salvamento bem-sucedido
           window.location.reload();
         },
@@ -314,7 +315,7 @@ fetchUsuarioLogado(): void {
         telefone: this.usuarioLogado.telefone,
         cpf: this.usuarioLogado.cpf,
         email: this.usuarioLogado.email,
-          
+
       });
     }
   }
@@ -342,7 +343,7 @@ fetchUsuarioLogado(): void {
         console.log('Endereço encontrado e preenchido:', endereco);
       },
       error: (error: HttpErrorResponse) => {
-        
+
         if (error.status === 404) {
           console.log('Nenhum endereço encontrado para o usuário. Prepare para cadastrar.');
           this.enderecoExistente = null; // Garante que o estado seja limpo
@@ -376,7 +377,7 @@ fetchUsuarioLogado(): void {
           console.log('Endereço cadastrado com sucesso:', response);
           this.message = 'Endereço cadastrado com sucesso!';
           this.isError = false;
-          this.enderecoForm.reset(); 
+          this.enderecoForm.reset();
         },
         error: (error) => {
           console.error('Falha ao cadastrar o endereço:', error);
@@ -434,7 +435,7 @@ fetchUsuarioLogado(): void {
     }
   }
 
-  
+
    cepValidator() {
     return (control: import('@angular/forms').AbstractControl) => {
       const cep = control.value;
@@ -451,7 +452,7 @@ fetchUsuarioLogado(): void {
     }
   }
 
-  
+
   onCepHelp(): void {
     window.open('https://buscacepinter.correios.com.br/', '_blank');
   }
@@ -506,7 +507,7 @@ fetchUsuarioLogado(): void {
 
 /*
   onCepHelp(): void {
-    console.log("Abrir link para busca de CEP");  
+    console.log("Abrir link para busca de CEP");
   }*/
 onToggleLojaStatus(): void {
   // 1. Guarda para evitar múltiplos cliques (Lógica Perfeita)
@@ -523,7 +524,7 @@ onToggleLojaStatus(): void {
   // 4. Chama o serviço para persistir a mudança
   this.usuarioService.atualizaToggleLoja(proximoEstado).subscribe({
     next: (perfilAtualizado) => {
-      this.statusLoja.set(perfilAtualizado.loja); 
+      this.statusLoja.set(perfilAtualizado.loja);
       console.log('Status da loja atualizado para:', perfilAtualizado.loja);
     },
     error: (err) => {
@@ -535,7 +536,7 @@ onToggleLojaStatus(): void {
     }
   });
 }
-  
+
      public buscarCep(cep: string): Observable<ViaCepResponse> {
 
     const cleanedCep = cep.replace(/\D/g, '');

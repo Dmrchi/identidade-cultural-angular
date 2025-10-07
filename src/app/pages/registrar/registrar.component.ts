@@ -49,7 +49,7 @@ export class RegistrarComponent {
   if (this.loginForm.valid) {
     this.errorMessage = null;
     const { nome, email, telefone, senha } = this.loginForm.value;
-    
+
     this.authService.register({ nome, email, telefone, senha }).subscribe({
       next: () => {
         console.log('Registro bem-sucedido, navegando...');
@@ -57,12 +57,13 @@ export class RegistrarComponent {
       },
       error: (error) => {
         console.error('Erro no registro:', error);
+        alert("Ocorreu um erro, preencha uma senha dificil || Verifique se o servidor está online.")
         this.errorMessage = error.error?.message || 'Erro ao registrar. Verifique os dados e tente novamente.';
       }
     });
   } else {
     this.errorMessage = 'Por favor, preencha o formulário corretamente.';
-    this.loginForm.markAllAsTouched(); 
+    this.loginForm.markAllAsTouched();
   }
 }
   /*

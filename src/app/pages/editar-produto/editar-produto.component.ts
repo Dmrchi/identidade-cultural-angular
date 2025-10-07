@@ -6,6 +6,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { environment } from '../../../environment.prod';
 
 @Component({
   selector: 'app-editar-produto',
@@ -15,7 +16,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     NgIf,
     NgFor,
     FontAwesomeModule,
-    
+
   ],
   templateUrl: './editar-produto.component.html',
   styleUrl: './editar-produto.component.scss'
@@ -26,8 +27,8 @@ export class EditarProdutoComponent {
 
   faCircleMinus = faCircleMinus;
   faCirclePlus = faCirclePlus;
-  private readonly API_CATEGORIAS = 'http://localhost:8081/api/categorias';
-  private readonly API_PRODUTOS = 'http://localhost:8081/api/produtos';
+  private readonly API_CATEGORIAS = environment.apiUrl+'/api/categorias';
+  private readonly API_PRODUTOS = environment.apiUrl+'/api/produtos';
   message: string | null = null;
   isError: boolean = false;
   listaDeCategorias: any[] = [];
@@ -154,7 +155,7 @@ export class EditarProdutoComponent {
           quantidade: produto.quantidade, // Não se esqueça de preencher a quantidade também
           // Define o valor do controle 'categoria' como o objeto encontrado.
           // O Angular selecionará a <option> correta por causa do [ngValue].
-          categoria: categoriaSelecionada || null 
+          categoria: categoriaSelecionada || null
         });
       },
       error: (err) => {

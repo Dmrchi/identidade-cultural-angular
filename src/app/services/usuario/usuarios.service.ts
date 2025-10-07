@@ -4,12 +4,13 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import { Usuario } from '../../pages/pedidos/pedidos.component';
 import { AuthService } from '../autenticacao/auth.service';
 import { Perfil, UsuarioUpdate } from '../../pages/perfil/perfil.component';
+import { environment } from '../../../environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
-  private apiUrl = 'http://localhost:8081/api/usuarios';
+    private readonly apiUrl = environment.apiUrl+'/api/usuarios';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -65,7 +66,7 @@ export class UsuariosService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    
+
     const params = new HttpParams().set('email', email);
 
     return this.http.get<any>(this.apiUrl+"/dono", { headers: headers, params: params }).pipe(
@@ -96,7 +97,7 @@ export class UsuariosService {
       })
     );
     }
-  
+
   public atualizarPerfil(dadosPerfil: UsuarioUpdate): Observable<Perfil> {
       const token = this.authService.getTokenLocalStorage();
 
@@ -129,24 +130,24 @@ public atualizaToggleLoja(novoStatus: boolean): Observable<Perfil> {
 
   // 2. Crie o corpo (body) da requisição que o backend espera
   //    Normalmente, um objeto JSON com a propriedade a ser alterada.
-  const body = { status: novoStatus }; 
+  const body = { status: novoStatus };
 
   return this.http.patch<Perfil>(url, body, { headers: headers});
 }
   getProdutosLoja(lojaEmail: string): Observable<Usuario> {
       const token = this.authService.getTokenLocalStorage();
-  
+
       if (!token) {
         console.error('Nenhum token de autenticação encontrado.');
         return throwError(() => new Error('Não autenticado'));
       }
-  
+
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`
       });
-  
+
       const params = new HttpParams().set('email', lojaEmail);
-  
+
       return this.http.get<Usuario>(this.apiUrl+'/dono', { headers: headers, params: params }).pipe(
         catchError(error => {
           console.error('Erro na requisição:', error);
@@ -154,7 +155,7 @@ public atualizaToggleLoja(novoStatus: boolean): Observable<Perfil> {
         })
       );
     }
-  
+
   private handleError(error: HttpErrorResponse): Observable<never> {
       console.error('An error occurred:', error);
       return throwError(() => new Error(`Error ${error.status}: ${error.message || 'Something went wrong'}`));
