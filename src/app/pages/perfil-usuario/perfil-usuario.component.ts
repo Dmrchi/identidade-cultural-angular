@@ -8,6 +8,7 @@ import { catchError, debounceTime, distinctUntilChanged, Observable, of, Subject
 import { EnderecoService } from '../../services/endereco/endereco.service';
 import { UsuariosService } from '../../services/usuario/usuarios.service';
 import { Perfil } from '../perfil/perfil.component';
+import { environment } from '../../../environments/environment.prod';
 
 export interface ViaCepResponse {
   cep: string;
@@ -38,7 +39,7 @@ export interface EnderecoPayload {
   usuario: Usuario;
 }
 export interface EnderecoResponse extends EnderecoPayload {
-  id: string; 
+  id: string;
 }
 interface Produto {
   id: string;
@@ -64,8 +65,7 @@ interface Produto {
   styleUrl: './perfil-usuario.component.scss'
 })
 export class PerfilUsuarioComponent {
-
-  private apiUrl = 'http://localhost:8081/api/produtos';
+private readonly apiUrl = environment.apiUrl+'/api/produtos';
   contagemCaracteres: number = 0;
 
   usuarioLogado: Perfil | null = null;
@@ -97,7 +97,7 @@ export class PerfilUsuarioComponent {
     private fb: FormBuilder,
     private enderecoService: EnderecoService,
     private usuarioService: UsuariosService,
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
 
   ) { }
 
@@ -159,7 +159,7 @@ export class PerfilUsuarioComponent {
       next: (usuario) => {
         this.usuarioLogado = usuario;
         if (this.usuarioLogado) {
-           
+
           this.perfilForm.patchValue({
             nome: this.usuarioLogado.nome,
             sobrenome: this.usuarioLogado.sobrenome,
@@ -212,7 +212,7 @@ export class PerfilUsuarioComponent {
       this.router.navigate(['/login']);
     }
   }
-  
+
 
   setActiveTab(tab: 'perfil' | 'produtos' | 'vendas'): void {
     this.activeTab = tab;
@@ -237,7 +237,7 @@ export class PerfilUsuarioComponent {
         console.log('Endereço encontrado e preenchido:', endereco);
       },
       error: (error: HttpErrorResponse) => {
-        
+
         if (error.status === 404) {
           console.log('Nenhum endereço encontrado para o usuário. Prepare para cadastrar.');
           this.enderecoExistente = null; // Garante que o estado seja limpo
@@ -271,7 +271,7 @@ export class PerfilUsuarioComponent {
           console.log('Endereço cadastrado com sucesso:', response);
           this.message = 'Endereço cadastrado com sucesso!';
           this.isError = false;
-          this.enderecoForm.reset(); 
+          this.enderecoForm.reset();
         },
         error: (error) => {
           console.error('Falha ao cadastrar o endereço:', error);
@@ -335,7 +335,7 @@ export class PerfilUsuarioComponent {
     }
   }
 
-  
+
 
 
   /*
@@ -377,7 +377,7 @@ export class PerfilUsuarioComponent {
   }*/
 /*
   onCepHelp(): void {
-    console.log("Abrir link para busca de CEP");  
+    console.log("Abrir link para busca de CEP");
   }*/
 
 }

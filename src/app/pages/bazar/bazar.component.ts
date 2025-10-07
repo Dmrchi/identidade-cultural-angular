@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../services/autenticacao/auth.service';
 import { Router } from '@angular/router';
 import { Categoria } from '../detalhes-produto/detalhes-produto.component';
+import { environment } from '../../../environments/environment.prod';
 
 export interface Produto {
   id?: string;
@@ -56,8 +57,7 @@ export class BazarComponent implements OnInit {
   totalElementos = 0;
   totalPaginas = 0;
   paginasVisiveis: (number | null)[] = []; // Array que armazena os números das páginas a serem exibidos
-
-  private apiUrl = 'http://localhost:8081/api';
+  private readonly apiUrl = environment.apiUrl+"/api";
   produtos: Produto[] = [];
   selectedCategoryId: String | null = null;
   selectedCategoriaNome: String | null = null;
@@ -73,7 +73,7 @@ export class BazarComponent implements OnInit {
   itens: Item[] = [];
 
 
-  
+
   constructor(
     private carrinhoService: CarrinhoServiceService,
     private http: HttpClient,
@@ -130,7 +130,7 @@ export class BazarComponent implements OnInit {
     const paginasParaExibir: Set<number> = new Set();
     const paginasTotais = this.totalPaginas;
     const paginaAtual = this.page;
-    
+
     // Adiciona a primeira página se existir
     if (paginasTotais > 0) {
       paginasParaExibir.add(0);
@@ -202,7 +202,7 @@ export class BazarComponent implements OnInit {
       });
     }
   }
-  
+
 
 
 selectCategory(categoria: Categoria): void {
@@ -274,7 +274,7 @@ getFilteredProducts(): any[] {
     return matchesCategory && matchesSearchText;
   });
 }
-  
+
   onSearch(): void {
     const query = this.query.toLowerCase();
     if (query) {

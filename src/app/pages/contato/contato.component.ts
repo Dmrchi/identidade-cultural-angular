@@ -7,6 +7,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page } from '../bazar/bazar.component';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-contato',
@@ -19,14 +20,14 @@ export class ContatoComponent {
   @ViewChild('productList') productList: ElementRef | undefined;
   query: string = '';
   results: string[] = [];
-  private apiUrl = 'http://localhost:8081/api';
+  private readonly apiUrl = environment.apiUrl+'/api';
   constructor(
     private authService: AuthService,
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute
 
-    
+
   ) {
   }
  ngOnInit(): void {
@@ -36,7 +37,7 @@ export class ContatoComponent {
 
       this.page.set(pagina);
       this.nomeBusca = nome || ''; // Atualiza a propriedade do input
-      
+
       this.carregarPerfis(nome); // Chama o método com o nome como parâmetro
     });
   }
@@ -102,12 +103,12 @@ export class ContatoComponent {
       });
   }
 onBuscar(): void {
-  this.page.set(0); 
-  
+  this.page.set(0);
+
   let queryParams: any = { page: 0 };
-  
+
     queryParams.nome = this.nomeBusca;
-  
+
   this.router.navigate([], {
     relativeTo: this.route,
     queryParams: queryParams,
@@ -175,7 +176,7 @@ gerarPaginasVisiveis(): void {
     }
   }
   if (paginasTotais > 1) paginasParaExibir.add(paginasTotais - 1);
-  
+
   const paginasOrdenadas = Array.from(paginasParaExibir).sort((a, b) => a - b);
   const paginasComReticencias: (number | null)[] = [];
   let ultimaPaginaAdicionada = -1;

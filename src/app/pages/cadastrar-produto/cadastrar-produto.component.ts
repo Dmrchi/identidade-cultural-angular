@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractContro
 import { AuthService } from '../../services/autenticacao/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { environment } from '../../../environments/environment.prod';
 
 @Component({
   selector: 'app-cadastrar-produto',
@@ -13,7 +14,7 @@ import { faCircleMinus, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
     ReactiveFormsModule,
     NgIf,
     NgFor,
-    FontAwesomeModule,  
+    FontAwesomeModule,
   ],
   templateUrl: './cadastrar-produto.component.html',
   styleUrl: './cadastrar-produto.component.scss'
@@ -24,8 +25,9 @@ export class CadastrarProdutoComponent implements OnInit {
   categoriaForm!: FormGroup;
   faCircleMinus = faCircleMinus;
   faCirclePlus = faCirclePlus;
-  private readonly API_CATEGORIAS = 'http://localhost:8081/api/categorias';
-  private readonly API_PRODUTOS = 'http://localhost:8081/api/produtos';
+
+  private readonly API_CATEGORIAS = environment.apiUrl+'/api/categorias';
+  private readonly API_PRODUTOS = environment.apiUrl+'/api/produtos';
   message: string | null = null;
   isError: boolean = false;
   listaDeCategorias: any[] = [];
@@ -53,7 +55,7 @@ export class CadastrarProdutoComponent implements OnInit {
     this.buscarTodasCategorias();
   }
 
- 
+
   get produtoNomeControl(): AbstractControl | null {
     return this.produtoForm.get('nome');
   }
@@ -121,20 +123,20 @@ export class CadastrarProdutoComponent implements OnInit {
   }
  buscarTodasCategorias() {
   const token = this.authService.getTokenLocalStorage();
-  
+
   if (token) {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    
+
     this.http.get<any[]>(this.API_CATEGORIAS, { headers: headers })
       .subscribe({
         next: (categorias) => {
           console.log('Todas as Categorias (antes do filtro):', categorias);
-          
+
           // Adicione esta linha para filtrar a categoria "Todos"
           this.listaDeCategorias = categorias.filter(cat => cat.nome !== 'Todos');
-          
+
           console.log('Categorias (após o filtro):', this.listaDeCategorias);
         },
         error: (error) => {
@@ -157,7 +159,7 @@ export class CadastrarProdutoComponent implements OnInit {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`
       });
-    
+
     if (this.produtoForm.valid) {
       const novoProduto = this.produtoForm.value;
       novoProduto.categoriaId = novoProduto.categoria.id.toString();

@@ -3,6 +3,7 @@ import { EnderecoPayload, EnderecoResponse, ViaCepResponse } from '../../pages/p
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { AuthService } from '../autenticacao/auth.service';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { AuthService } from '../autenticacao/auth.service';
 
 
 export class EnderecoService {
-  private apiUrl = 'http://localhost:8081/api/endereco';
+    private readonly apiUrl = environment.apiUrl+'/api/endereco';
   enderecoExistente: EnderecoResponse | null = null;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
@@ -71,8 +72,8 @@ export class EnderecoService {
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`
       });
-      
-      
+
+
       const url = `${this.apiUrl}`;///${endereco.id}
 
       return this.http.put<EnderecoResponse>(url, endereco, { headers: headers });
